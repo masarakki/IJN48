@@ -1,0 +1,24 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    coffee-script (2.2.0)
+      coffee-script-source
+      execjs
+    coffee-script-source (1.6.3)
+    crxmake (2.1.2)
+      zip (~> 2.0.2)
+    execjs (1.4.0)
+      multi_json (~> 1.0)
+    haml (4.0.3)
+      tilt
+    multi_json (1.7.9)
+    tilt (1.4.1)
+    zip (2.0.2)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  coffee-script
+  crxmake
+  haml
