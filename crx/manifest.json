@@ -1,0 +1,16 @@
+{
+    "name": "Isuzu Breaker",
+    "version": "0.0.1",
+    "background": {
+        "scripts": ["jquery.min.js", "background.js"]
+    },
+    "content_scripts": [
+        {
+            "matches": ["http://osapi.dmm.com/gadgets/ifr*"],
+            "js": ["jquery.min.js", "content_script.js"],
+            "run_at": "document_end",
+            "all_frames": true
+        }
+    ],
+    "permissions": ["*://osapi.dmm.com/*"]
+}

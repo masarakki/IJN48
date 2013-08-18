@@ -1,6 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    coderay (1.0.9)
     coffee-script (2.2.0)
       coffee-script-source
       execjs
@@ -9,10 +10,21 @@ GEM
       zip (~> 2.0.2)
     execjs (1.4.0)
       multi_json (~> 1.0)
-    haml (4.0.3)
-      tilt
+    method_source (0.8.2)
+    mime-types (1.24)
     multi_json (1.7.9)
-    tilt (1.4.1)
+    pry (0.9.12.2)
+      coderay (~> 1.0.5)
+      method_source (~> 0.8)
+      slop (~> 3.4)
+    pry-doc (0.4.6)
+      pry (>= 0.9)
+      yard (>= 0.8)
+    rake (10.1.0)
+    rest-client (1.6.7)
+      mime-types (>= 1.16)
+    slop (3.4.6)
+    yard (0.8.7)
     zip (2.0.2)
 
 PLATFORMS
@@ -21,4 +33,7 @@ PLATFORMS
 DEPENDENCIES
   coffee-script
   crxmake
-  haml
+  pry
+  pry-doc
+  rake
+  rest-client
