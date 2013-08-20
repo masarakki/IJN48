@@ -12,4 +12,6 @@ group :development, :test do
   gem 'pry'
   gem 'pry-doc'
   gem 'rack-test'
+  gem 'guard'
+  gem 'guard-rspec'
 end
