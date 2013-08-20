@@ -8,8 +8,8 @@ module Naka
     end
 
     post '/' do
-      require 'cgi'
-      user = User.from_request(params[:owner_id], params[:url])
+      User.from_request(params[:owner_id], params[:url]).store
+      :ok
     end
   end
 end
