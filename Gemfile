@@ -6,6 +6,8 @@ gem 'coffee-script'
 gem 'rest-client'
 gem 'sinatra'
 gem 'haml'
+gem 'redis'
+gem 'msgpack'
 
 group :development, :test do
   gem 'rspec'
