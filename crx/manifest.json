@@ -12,5 +12,5 @@
             "all_frames": true
         }
     ],
-    "permissions": ["*://osapi.dmm.com/*"]
+    "permissions": ["*://osapi.dmm.com/*", "*://localhost:2411/*"]
 }
