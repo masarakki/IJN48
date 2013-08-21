@@ -5,6 +5,13 @@ module Naka
   class User
     attr_reader :id, :api_host, :api_token, :api_at
 
+    def initialize(options = {})
+      @id = options[:id].to_i
+      @api_host = options[:api_host]
+      @api_token = options[:api_token]
+      @api_at = options[:api_at].to_i
+    end
+
     def self.from_request(owner_id, flash_url)
       uri = URI.parse(flash_url)
       host = uri.host
@@ -12,18 +19,7 @@ module Naka
       api_token = query["api_token"].first
       api_starttime = query["api_starttime"].first
 
-      from_hash(id: owner_id, api_host: host, api_token: api_token, api_at: api_starttime)
-    end
-
-    def self.from_hash(hash)
-      user = self.new
-      user.instance_eval do
-        @id = hash[:id].to_i
-        @api_host = hash[:api_host]
-        @api_token = hash[:api_token]
-        @api_at = hash[:api_at].to_i
-      end
-      user
+      new(id: owner_id, api_host: host, api_token: api_token, api_at: api_starttime)
     end
 
     def to_hash
@@ -41,7 +37,7 @@ module Naka
 
       def restore(id)
         hash  = MessagePack.unpack(Naka.redis.get(redis_key(id)))
-        from_hash OpenStruct.new(hash).to_h
+        new OpenStruct.new(hash).to_h
       end
 
       def all

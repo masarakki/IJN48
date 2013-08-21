@@ -8,6 +8,9 @@ gem 'sinatra'
 gem 'haml'
 gem 'redis'
 gem 'msgpack'
+gem 'rest-client'
+gem 'multi_json'
+gem 'yajl-ruby'
 
 group :development, :test do
   gem 'rspec'
@@ -16,4 +19,8 @@ group :development, :test do
   gem 'rack-test'
   gem 'guard'
   gem 'guard-rspec'
+end
+
+group :test do
+  gem 'webmock'
 end
