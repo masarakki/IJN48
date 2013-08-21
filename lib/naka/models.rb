@@ -1,0 +1,1 @@
+require 'naka/models/ship'
