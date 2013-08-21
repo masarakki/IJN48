@@ -6,7 +6,7 @@ describe Naka::Models::Dock do
     its(:id) { should == 1 }
     its(:member_id) { should == 32377 }
     its(:ship_id) { should == 1233 }
-    its(:repairs_at) { should == Time.parse("2013-08-22 05:41:18") }
+    its(:repairs_at) { should == Time.parse("2013-08-22 05:41:18 +0900") }
     it { should be_used }
     it { should_not be_blank }
   end
