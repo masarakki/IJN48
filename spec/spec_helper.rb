@@ -6,6 +6,8 @@
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 $:.unshift File.expand_path('../../lib', __FILE__)
 require 'naka'
+require 'webmock/rspec'
+
 RSpec.configure do |config|
   config.treat_symbols_as_metadata_keys_with_true_values = true
   config.run_all_when_everything_filtered = true
@@ -16,4 +18,12 @@ RSpec.configure do |config|
   # the seed, which is printed after each run.
   #     --seed 1234
   config.order = 'random'
+
+  def mock_file(path)
+    File.read File.expand_path("../support/#{path}", __FILE__)
+  end
+
+  def user
+    Naka::User.new(id: 1, api_host: '0.0.0.0', api_token: 'token', api_at: 0)
+  end
 end
