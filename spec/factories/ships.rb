@@ -13,10 +13,12 @@ FactoryGirl.define do
 
     trait :damaged do
       hp { Naka::Models::Ship::Hp.new(20, 30) }
+      repairs_in 60 * 10
     end
 
     trait :fatal_damaged do
       hp { Naka::Models::Ship::Hp.new(15, 30) }
+      repairs_in 60 * 60 * 12
     end
 
     trait :tired do
