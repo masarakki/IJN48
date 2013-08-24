@@ -7,6 +7,7 @@
 $:.unshift File.expand_path('../../lib', __FILE__)
 require 'naka'
 require 'webmock/rspec'
+require 'pry'
 
 RSpec.configure do |config|
   config.treat_symbols_as_metadata_keys_with_true_values = true
@@ -19,14 +20,14 @@ RSpec.configure do |config|
   #     --seed 1234
   config.order = 'random'
 
+  config.before do
+    example.example_group.let(:user) { Naka::User.new(id: 1, api_host: '0.0.0.0', api_token: 'token', api_at: 0) }
+  end
+
   config.before { Naka::User.stub(:namespace) { "ijn48:naka:user:test" } }
   config.after { Naka::User.send(:clean) }
 
   def mock_file(path)
     File.read File.expand_path("../support/#{path}", __FILE__)
-  end
-
-  def user
-    Naka::User.new(id: 1, api_host: '0.0.0.0', api_token: 'token', api_at: 0)
   end
 end

@@ -17,13 +17,12 @@ describe Naka::User do
   end
 
   describe :store do
-    let(:user) { double(:id => owner_id, :to_hash => {id: owner_id, api_token: api_token}) }
     subject {
       Naka::User.store(user)
-      Naka::User.restore(owner_id)
+      Naka::User.restore(user.id)
     }
-    its(:id) { should == owner_id.to_i }
-    its(:api_token) { should == api_token }
+    its(:id) { should == user.id }
+    its(:api_token) { should == user.api_token }
   end
 
   describe :all do
