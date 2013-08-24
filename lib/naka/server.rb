@@ -1,5 +1,6 @@
 require 'sinatra/base'
 require 'haml'
+require 'json'
 
 module Naka
   class Server < Sinatra::Base
@@ -27,6 +28,14 @@ module Naka
         user.repair(ship, dock) unless dock.nil? || ship.nil?
       end
       :ok
+    end
+
+    get '/ships' do
+      user = User.restore(User.all.first)
+      ships = user.ships_master
+      ships.map {|id, item|
+        item.to_h
+      }.to_json
     end
   end
 end

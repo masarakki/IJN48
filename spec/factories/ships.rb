@@ -23,4 +23,12 @@ FactoryGirl.define do
       condition 30
     end
   end
+
+  factory :ship_master, :class => OpenStruct do
+    sequnce(:id)
+    name :name
+    type :type
+    fuel 20
+    bullet 30
+  end
 end
