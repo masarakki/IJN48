@@ -23,4 +23,21 @@ describe Naka::Models::Dock do
     it { should_not be_used }
     it { should be_blank }
   end
+
+  describe :factoreis do
+    describe :blank do
+      subject { build(:dock, :blank) }
+      it { should be_blank }
+    end
+    describe :short do
+      subject { build(:dock, :short) }
+      it { should be_used }
+      its(:repairs_in) { should == 10 * 60 }
+    end
+    describe :long do
+      subject { build(:dock, :long) }
+      it { should be_used }
+      its(:repairs_in) { should == 12 * 60 * 60 }
+    end
+  end
 end

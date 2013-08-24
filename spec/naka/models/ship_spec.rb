@@ -26,4 +26,21 @@ describe Naka::Models::Ship do
       it { expect(Naka::Models::Ship::Hp.new(10, 20)).to be_danger }
     end
   end
+
+  describe :factories do
+    describe :damaged do
+      subject { build(:ship, :damaged) }
+      it { should be_damaged }
+      it { should_not be_danger }
+    end
+    describe :fatal_damaged do
+      subject { build(:ship, :fatal_damaged) }
+      it { should be_damaged }
+      it { should be_danger }
+    end
+    describe :damaged_and_tired do
+      subject { build(:ship, :damaged, :tired) }
+      it { should be_danger }
+    end
+  end
 end
