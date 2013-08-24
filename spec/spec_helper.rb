@@ -7,12 +7,15 @@
 $:.unshift File.expand_path('../../lib', __FILE__)
 require 'naka'
 require 'webmock/rspec'
+require 'factory_girl'
 require 'pry'
 
 RSpec.configure do |config|
   config.treat_symbols_as_metadata_keys_with_true_values = true
   config.run_all_when_everything_filtered = true
   config.filter_run :focus
+  FactoryGirl.find_definitions
+  config.include FactoryGirl::Syntax::Methods
 
   # Run specs in random order to surface order dependencies. If you find an
   # order dependency and want to debug it, you can fix the order by providing
@@ -21,7 +24,7 @@ RSpec.configure do |config|
   config.order = 'random'
 
   config.before do
-    example.example_group.let(:user) { Naka::User.new(id: 1, api_host: '0.0.0.0', api_token: 'token', api_at: 0) }
+    example.example_group.let(:user) { Naka::User.new(attributes_for(:user)) }
   end
 
   config.before { Naka::User.stub(:namespace) { "ijn48:naka:user:test" } }

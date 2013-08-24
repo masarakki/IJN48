@@ -17,8 +17,11 @@ module Naka
       end
 
       def ship_id=(val) ; @ship_id = val unless val == 0 ; end
-      def state=(val) ; @used = val == 1 ; end
+      def state=(val) ; @used = val == true || val == 1 ; end
       def complete_time=(val) ; @repairs_at = Time.at(val / 1000) unless val == 0 ; end
+
+      def api_state=(val) ; @used = val == 1; end
+      def api_complete_time=(val) ; @repairs_at = Time.at(val / 1000) unless val == 0 ; end
     end
   end
 end
