@@ -6,7 +6,7 @@ module Naka
         def danger? ; now * 2 <= max ; end
       end
 
-      attr_accessor :id, :ship_id, :lv, :fuel, :bull, :hp, :repairs_in, :condition
+      attr_accessor :id, :ship_id, :lv, :fuel, :bull, :hp, :repairs_in, :condition, :master
 
       def initialize(options = {})
         @hp = Hp.new
@@ -20,6 +20,7 @@ module Naka
       def damaged? ; @hp.damaged? ; end
       def tired? ; @condition <= 30 ; end
       def danger? ; tired? || hp.danger? ; end
+      def consumed? ; ! (master.bullet == bull && master.fuel == fuel) ; end
 
       def nowhp=(val) ; @hp.now = val ; end
       def maxhp=(val) ; @hp.max = val ; end

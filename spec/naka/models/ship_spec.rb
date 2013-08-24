@@ -20,6 +20,17 @@ describe Naka::Models::Ship do
   its(:repairs_in) { should == 1870 }
   its(:condition) { should == 49 }
 
+  describe :consumed? do
+    context :equals do
+      before { ship.master = OpenStruct.new(:fuel => 20, :bullet => 44) }
+      it { should_not be_consumed }
+    end
+    context :used do
+      before { ship.master = OpenStruct.new(:fuel => 20, :bullet => 45) }
+      it { should be_consumed }
+    end
+  end
+
   describe Naka::Models::Ship::Hp do
     describe :danger? do
       it { expect(Naka::Models::Ship::Hp.new(11, 21)).not_to be_danger }
