@@ -20,6 +20,7 @@ RSpec.configure do |config|
   config.order = 'random'
 
   config.before { Naka::User.stub(:namespace) { "ijn48:naka:user:test" } }
+  config.after { Naka::User.send(:clean) }
 
   def mock_file(path)
     File.read File.expand_path("../support/#{path}", __FILE__)
