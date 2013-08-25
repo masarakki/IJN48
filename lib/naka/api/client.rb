@@ -18,11 +18,16 @@ module Naka
         @api_hsot ||= "http://#{user.api_host}"
       end
 
-      def post(path, args = {}, options = {})
+      def post(path, args = {})
         args.merge!(api_token: user.api_token, api_verno: 1)
-        options.merge!(referer: referer, host: user.api_host, origin: "http://#{user.api_host}", accept_encoding: 'gzip, deflate, sdch')
-        response = RestClient.post File.join(api_host, path), args, options
-        json = MultiJson.load response.gsub(/^svdata=/, ''), :symbolize_keys => true
+        options = {
+          referer: referer,
+          host: user.api_host,
+          origin: "http://#{user.api_host}",
+          accept_encoding: 'gzip, deflate, sdch'
+        }
+        response = RestClient.post(File.join(api_host, path), args, options).gsub(/^\s*svdata=/, '')
+        json = MultiJson.load response, :symbolize_keys => true
         raise unless json[:api_result] == 1
         json
       end
