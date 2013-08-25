@@ -16,7 +16,7 @@ module Naka
     # sample code to repair ship
     get '/repair' do
       user = User.restore(User.all.first)
-      ships = user.ships[:ships]
+      ships = user.ships
       docks = user.docks
       blank_docks = docks.select(&:blank?)
       return :ok unless blank_docks

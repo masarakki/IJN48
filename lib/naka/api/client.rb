@@ -18,7 +18,7 @@ module Naka
         @api_hsot ||= "http://#{user.api_host}"
       end
 
-      def post(path, args, options = {})
+      def post(path, args = {}, options = {})
         args.merge!(api_token: user.api_token, api_verno: 1)
         options.merge!(referer: referer, host: user.api_host, origin: "http://#{user.api_host}", accept_encoding: 'gzip, deflate, sdch')
         response = RestClient.post File.join(api_host, path), args, options
