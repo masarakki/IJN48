@@ -38,13 +38,10 @@ module Naka
       def ships
         ships = ships_master
         response = api.post "/kcsapi/api_get_member/ship2", api_sort_order: 2, api_sort_key: 1, api_verno: 1
-        {
-          ships: response[:api_data].map { |ship|
-            master_data = ships_master.assoc(ship[:api_ship_id])
-            Naka::Models::Ship.new(ship.merge(api_master: master_data))
-          },
-          groups: response[:api_data_deck]
-        }
+        response[:api_data].map do |ship|
+          master_data = ships_master.assoc(ship[:api_ship_id])
+          Naka::Models::Ship.new(ship.merge(api_master: master_data))
+        end
       end
     end
   end
