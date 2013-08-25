@@ -23,7 +23,7 @@ module Naka
             13 => '潜水艦',
             14 => '潜水母艦'
           }
-          response = api.post "/kcsapi/api_get_master/ship", api_verno:1
+          response = api.post "/kcsapi/api_get_master/ship"
           ships_master = response[:api_data].map do |ship|
             {
               id: ship[:api_id], name: ship[:api_name], type: types[ship[:api_stype]],
@@ -37,9 +37,9 @@ module Naka
 
       def ships
         ships = ships_master
-        response = api.post "/kcsapi/api_get_member/ship2", api_sort_order: 2, api_sort_key: 1, api_verno: 1
+        response = api.post "/kcsapi/api_get_member/ship2", api_sort_order: 2, api_sort_key: 1
         response[:api_data].map do |ship|
-          master_data = ships_master.assoc(ship[:api_ship_id])
+          master_data = ships.assoc(ship[:api_ship_id]).last
           Naka::Models::Ship.new(ship.merge(api_master: master_data))
         end
       end
