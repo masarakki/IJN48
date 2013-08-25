@@ -3,7 +3,7 @@ require 'spec_helper'
 describe Naka::Api::Ships do
   describe :ships do
     before do
-      user.stub(:ships_master) { build_list(:ship_master, 500).map {|ship| [ship.id, ship] }}
+      user.stub(:ships_master) { build_list(:ship_master, 500) }
     end
     it 'call api' do
       stub_request(:post, "http://#{user.api_host}/kcsapi/api_get_member/ship2").
