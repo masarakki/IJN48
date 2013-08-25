@@ -30,6 +30,17 @@ module Naka
       :ok
     end
 
+    get '/mission' do
+      mission_ids = [2, 9, 11]
+      user = User.restore(User.all.first)
+      fleets = user.fleets
+      enable_mission_ids = mission_ids - fleets.map{|fleet| fleet.mission.id if fleet.mission }
+      fleets.select(&:missionable?).zip(enable_mission_ids).each do |fleet, mission_id|
+        user.start_mission(fleet.id, mission_id) if fleet && mission_id
+      end
+      :ok
+    end
+
     get '/ships' do
       user = User.restore(User.all.first)
       ships = user.ships_master
