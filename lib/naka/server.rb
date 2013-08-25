@@ -41,6 +41,17 @@ module Naka
       :ok
     end
 
+    get '/supply' do
+      user = User.restore(User.all.first)
+      ships = user.ships
+      fleets = user.fleets
+      fleets.select{|x| x.mission.nil? }.each do |fleet|
+        consumed_ships = ships.select{|ship| fleet.ship_ids.include?(ship.id) && ship.consumed? }
+        user.supply(consumed_ships.map(&:id), :both) if consumed_ships.length > 0
+      end
+      :ok
+    end
+
     get '/ships' do
       user = User.restore(User.all.first)
       ships = user.ships_master
