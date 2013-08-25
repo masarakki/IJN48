@@ -2,7 +2,9 @@ require 'spec_helper'
 
 describe Naka::Api::Ships do
   describe :ships do
-    before { user.stub(:ships_master) { FactoryGirl.build_list(:ship_master, 100) } }
+    before do
+      user.stub(:ships_master) { build_list(:ship_master, 500).map {|ship| [ship.id, ship] }}
+    end
     it 'call api' do
       stub_request(:post, "http://#{user.api_host}/kcsapi/api_get_member/ship2").
         with(:body => {"api_sort_key" => "1", "api_sort_order" => "2", "api_token" => user.api_token.to_s, "api_verno" => "1"},
@@ -11,6 +13,7 @@ describe Naka::Api::Ships do
         to_return(:status => 200, :body => mock_file('api/ships/response.json'), :headers => {})
       ships = user.ships
       expect(ships.count).to eq 83
+      expect(ships.first.master.id).to eq 119
     end
   end
 

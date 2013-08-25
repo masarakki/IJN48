@@ -25,7 +25,7 @@ FactoryGirl.define do
   end
 
   factory :ship_master, :class => OpenStruct do
-    sequnce(:id)
+    sequence(:id)
     name :name
     type :type
     fuel 20
