@@ -16,7 +16,7 @@ module Naka
     # sample code to repair ship
     get '/repair' do
       user = User.restore(User.all.first)
-      ships = user.ships[:ships]
+      ships = user.ships
       docks = user.docks
       blank_docks = docks.select(&:blank?)
       return :ok unless blank_docks
@@ -26,6 +26,17 @@ module Naka
         sort_by{|x| x.hp.max - x.hp.now}.reverse
       blank_docks.zip(damaged_ships).each do |dock, ship|
         user.repair(ship, dock) unless dock.nil? || ship.nil?
+      end
+      :ok
+    end
+
+    get '/mission' do
+      mission_ids = [2, 9, 11]
+      user = User.restore(User.all.first)
+      fleets = user.fleets
+      enable_mission_ids = mission_ids - fleets.map{|fleet| fleet.mission.id if fleet.mission }
+      fleets.select(&:missionable?).zip(enable_mission_ids).each do |fleet, mission_id|
+        user.start_mission(fleet.id, mission_id) if fleet && mission_id
       end
       :ok
     end
