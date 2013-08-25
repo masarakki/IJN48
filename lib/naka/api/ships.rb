@@ -32,15 +32,15 @@ module Naka
           end
           Naka.redis.set(redis_key, ships_master.to_msgpack)
         end
-        ships_master.map{|ship| [ship[:id], OpenStruct.new(ship)] }
+        ships_master.map { |ship| OpenStruct.new(ship) }
       end
 
       def ships
         ships = ships_master
         response = api.post "/kcsapi/api_get_member/ship2", api_sort_order: 2, api_sort_key: 1
         response[:api_data].map do |ship|
-          master_data = ships.assoc(ship[:api_ship_id]).last
-          Naka::Models::Ship.new(ship.merge(api_master: master_data))
+          master_ship = ships.detect{|master_ship| master_ship.id == ship[:api_ship_id] }
+          Naka::Models::Ship.new(ship.merge(api_master: master_ship))
         end
       end
     end
