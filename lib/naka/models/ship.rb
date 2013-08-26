@@ -16,11 +16,12 @@ module Naka
         end
       end
 
+      def bullet ; @bull ; end
       def locked? ; @locked ; end
       def damaged? ; @hp.damaged? ; end
       def tired? ; @condition <= 30 ; end
       def danger? ; tired? || hp.danger? ; end
-      def consumed? ; ! (master.bullet == bull && master.fuel == fuel) ; end
+      def consumed? ; ! (master.bullet == bullet && master.fuel == fuel) ; end
 
       def nowhp=(val) ; @hp.now = val ; end
       def maxhp=(val) ; @hp.max = val ; end

@@ -10,6 +10,7 @@ describe Naka::Models::Fleet do
     end
     context :in_mission do
       subject { Naka::Models::Fleet.from_api(MultiJson.load(mock_file('models/fleet/missioning.json'))) }
+      before { subject.mission.stub(:finished?) { false } }
       its(:id) { should == 2 }
       its(:mission) { should be_a Naka::Models::Fleet::Mission }
       its("mission.id") { should == 2 }

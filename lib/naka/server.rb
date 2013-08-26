@@ -22,24 +22,16 @@ module Naka
     end
 
     get '/mission' do
-      mission_ids = [2, 9, 11]
       user = User.restore(User.all.first)
-      fleets = user.fleets
-      enable_mission_ids = mission_ids - fleets.map{|fleet| fleet.mission.id if fleet.mission }
-      fleets.select(&:missionable?).zip(enable_mission_ids).each do |fleet, mission_id|
-        user.start_mission(fleet.id, mission_id) if fleet && mission_id
-      end
+      Naka::Strategies::Mission.new(user, [2, 9, 11]).run
       :ok
     end
 
     get '/supply' do
       user = User.restore(User.all.first)
-      ships = user.ships
       fleets = user.fleets
-      fleets.select{|x| x.mission.nil? }.each do |fleet|
-        consumed_ships = ships.select{|ship| fleet.ship_ids.include?(ship.id) && ship.consumed? }
-        user.supply(consumed_ships.map(&:id), :both) if consumed_ships.length > 0
-      end
+      ship_ids = fleets.select{|x| x.mission.nil? }.map(&:ship_ids).flatten.compact
+      Naka::Strategies::Supply.new(user, ship_ids).run
       :ok
     end
 
