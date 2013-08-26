@@ -2,6 +2,7 @@ require 'naka/server'
 require 'naka/user'
 require 'naka/models'
 require 'naka/api'
+require 'naka/strategy'
 require 'redis'
 
 module Naka
