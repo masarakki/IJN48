@@ -23,7 +23,8 @@ module Naka
 
     get '/mission' do
       user = User.restore(User.all.first)
-      Naka::Strategies::Mission.new(user, [2, 9, 11]).run
+      Naka::Strategies::Mission.new(user, [1, 2, 3]).run
+#      Naka::Strategies::Mission.new(user, [2, 9, 11]).run
       :ok
     end
 
