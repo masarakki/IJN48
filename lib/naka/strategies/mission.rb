@@ -19,6 +19,9 @@ module Naka
       end
 
       def run
+        if fleets.any? {|fleet| fleet.mission && fleet.mission.finished? }
+          user.api.post "/kcsapi/api_get_member/deck_port"
+        end
         fleets.select(&:missionable?).zip(mission_ids).each do |fleet, mission_id|
           begin
             user.mission_result(fleet.id) if fleet.mission
