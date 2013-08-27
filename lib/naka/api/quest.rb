@@ -17,6 +17,18 @@ module Naka
         }
         result
       end
+
+      def start_quest(quest_id)
+        api.post "/kcsapi/api_req_quest/start", api_quest_id: quest_id
+      end
+
+      def stop_quest(quest_id)
+        api.post "/kcsapi/api_req_quest/stop", api_quest_id: quest_id
+      end
+
+      def complete_quest(quest_id)
+        api.post "/kcsapi/api_req_quest/clearitemget", api_quest_id: quest_id
+      end
     end
   end
 end
