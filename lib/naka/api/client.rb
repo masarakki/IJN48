@@ -27,7 +27,10 @@ module Naka
           accept_encoding: 'gzip, deflate, sdch'
         }
         begin
-          response = RestClient.post(File.join(api_host, path), args, options).gsub(/^\s*svdata=/, '')
+          response = RestClient.post(File.join(api_host, path), args, options).
+            force_encoding(Encoding::UTF_8).
+            gsub("\xEF\xBB\xBF".force_encoding(Encoding::UTF_8), "").
+            gsub(/^svdata=/, '')
           json = MultiJson.load response, :symbolize_keys => true
           raise unless json[:api_result] == 1
           json
