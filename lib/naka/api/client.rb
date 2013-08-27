@@ -26,10 +26,16 @@ module Naka
           origin: "http://#{user.api_host}",
           accept_encoding: 'gzip, deflate, sdch'
         }
-        response = RestClient.post(File.join(api_host, path), args, options).gsub(/^\s*svdata=/, '')
-        json = MultiJson.load response, :symbolize_keys => true
-        raise unless json[:api_result] == 1
-        json
+        begin
+          response = RestClient.post(File.join(api_host, path), args, options).gsub(/^\s*svdata=/, '')
+          json = MultiJson.load response, :symbolize_keys => true
+          raise unless json[:api_result] == 1
+          json
+        rescue => e
+          p path, args
+          puts response
+          raise e
+        end
       end
     end
   end
