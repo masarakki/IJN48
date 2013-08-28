@@ -15,7 +15,7 @@ module Naka
 
     # sample code to repair ship
     get '/repair' do
-      user = User.restore(User.all.first)
+      user = User.first
       if params["cheat"] == "true"
         strategy = Naka::Strategies::RepairWithCheating.new(user)
       else
@@ -26,13 +26,13 @@ module Naka
     end
 
     get '/mission' do
-      user = User.restore(User.all.first)
+      user = User.first
       Naka::Strategies::Mission.new(user, [2, 9, 11]).run
       :ok
     end
 
     get '/supply' do
-      user = User.restore(User.all.first)
+      user = User.first
       fleets = user.fleets
       ship_ids = fleets.select{|x| x.mission.nil? }.map(&:ship_ids).flatten.compact
       Naka::Strategies::Supply.new(user, ship_ids).run
@@ -40,7 +40,7 @@ module Naka
     end
 
     get '/ships' do
-      user = User.restore(User.all.first)
+      user = User.first
       ships = user.ships_master
       ships.map {|id, item|
         item.to_h
@@ -48,7 +48,7 @@ module Naka
     end
 
     get '/create' do
-      user = User.restore(User.all.first)
+      user = User.first
       ships = user.ships_master
       response = user.create_ship(300, 30, 600, 400)
       ship_id = response[:api_data][:api_ship_id]
@@ -57,7 +57,7 @@ module Naka
     end
 
     get '/quests' do
-      user = User.restore(User.all.first)
+      user = User.first
       quests = user.quests
       quests.each do |quest|
         user.complete_quest(quest.id) if quest.completable?

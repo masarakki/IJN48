@@ -24,7 +24,7 @@ RSpec.configure do |config|
   config.order = 'random'
 
   config.before do
-    example.example_group.let(:user) { Naka::User.new(attributes_for(:user)) }
+    example.example_group.let(:mock_user) { build(:user) }
   end
 
   config.before { Naka::User.stub(:namespace) { "ijn48:naka:user:test" } }

@@ -3,7 +3,7 @@ require 'msgpack'
 
 module Naka
   class User
-    attr_reader :id, :api_host, :api_token, :api_at
+    attr_accessor :id, :api_host, :api_token, :api_at
 
     def initialize(options = {})
       @id = options[:id].to_i
@@ -35,13 +35,21 @@ module Naka
         Naka.redis.set(redis_key(record.id), record.to_hash.to_msgpack)
       end
 
-      def restore(id)
-        hash  = MessagePack.unpack(Naka.redis.get(redis_key(id)))
+      def restore(key)
+        hash  = MessagePack.unpack(Naka.redis.get(key))
         new OpenStruct.new(hash).to_h
       end
 
+      def find(id)
+        restore(redis_key(id))
+      end
+
       def all
-        keys.map {|key| key.split(/:/).last.to_i }.sort
+        keys.map {|key| restore(key) }
+      end
+
+      def first
+        restore(keys.first)
       end
 
       def remove(id)
@@ -62,7 +70,7 @@ module Naka
       end
 
       def clean
-        all.each {|id| remove id }
+        keys.each {|key| Naka.redis.del(key) }
       end
     end
   end

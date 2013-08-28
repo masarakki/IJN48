@@ -5,11 +5,11 @@ describe Naka::Api::Quest do
   describe :quests do
     it 'call api' do
       (1..3).each do |page|
-        stub_request(:post, "http://0.0.0.0/kcsapi/api_get_member/questlist").
-          with(:body => {"api_page_no"=> page.to_s, "api_token"=>"token", "api_verno"=>"1"}).
+        stub_request(:post, "http://#{mock_user.api_host}/kcsapi/api_get_member/questlist").
+          with(:body => {"api_page_no"=>page.to_s, "api_token"=>mock_user.api_token, "api_verno"=>"1"}).
           to_return(:status => 200, :body => mock_file("api/quest/quests_#{page}.json"))
       end
-      quests = user.quests
+      quests = mock_user.quests
       expect(quests.count).to eq 15
 
       quest = quests.first

@@ -18,19 +18,26 @@ describe Naka::User do
 
   describe :store do
     subject {
-      Naka::User.store(user)
-      Naka::User.restore(user.id)
+      Naka::User.store(mock_user)
+      Naka::User.find(mock_user.id)
     }
-    its(:id) { should == user.id }
-    its(:api_token) { should == user.api_token }
+    its(:id) { should == mock_user.id }
+    its(:api_token) { should == mock_user.api_token }
   end
 
   describe :all do
     before do
-      Naka::User.store(double(:id => 1, :to_hash => {}))
-      Naka::User.store(double(:id => 2, :to_hash => {}))
+      Naka::User.store(build(:user, :id => 1))
+      Naka::User.store(build(:user, :id => 2))
     end
-    subject { Naka::User.all }
-    it { should == [1, 2] }
+    subject { Naka::User.all.map(&:id).sort }
+    it { should == [1, 2].sort }
+  end
+
+  describe :find do
+    let(:user) { build(:user, :id => 1024) }
+    before { Naka::User.store(user) }
+    subject { Naka::User.find(1024).to_hash }
+    it { should == user.to_hash }
   end
 end
