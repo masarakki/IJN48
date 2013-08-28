@@ -38,8 +38,19 @@ module Naka
         }
       end
 
+      def cheating
+        user.ships.each do |ship|
+          user.repair(ship, nil, true) if ship.repairs_in > cheat_if_over_it
+        end
+      end
+
+      def cheat_if_over_it
+        nil
+      end
+
       def run
         return false unless docks.select(&:blank?)
+        cheating if cheat_if_over_it
         docks.select(&:blank?).zip(damaged_ships).each do |dock, ship|
           user.repair(ship, dock) if dock && ship
         end
