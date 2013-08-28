@@ -5,6 +5,7 @@ require 'naka/api/docks'
 require 'naka/api/repair'
 require 'naka/api/mission'
 require 'naka/api/supply'
+require 'naka/api/factory'
 
 module Naka
   class User
@@ -14,6 +15,7 @@ module Naka
     include Naka::Api::Mission
     include Naka::Api::Fleets
     include Naka::Api::Supply
+    include Naka::Api::Factory
 
     def api
       @client ||= Naka::Api::Client.new(self)

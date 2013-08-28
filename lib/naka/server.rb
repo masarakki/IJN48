@@ -42,5 +42,14 @@ module Naka
         item.to_h
       }.to_json
     end
+
+    get '/create' do
+      user = User.restore(User.all.first)
+      ships = user.ships_master
+      response = user.create_ship(300, 30, 600, 400)
+      ship_id = response[:api_data][:api_ship_id]
+      p ships.detect{|ship| ship.id == ship_id}
+      :ok
+    end
   end
 end
