@@ -55,5 +55,14 @@ module Naka
       p ships.detect{|ship| ship.id == ship_id}
       :ok
     end
+
+    get '/quests' do
+      user = User.restore(User.all.first)
+      quests = user.quests
+      quests.each do |quest|
+        user.complete_quest(quest.id) if quest.completable?
+      end
+      quests.to_json
+    end
   end
 end
