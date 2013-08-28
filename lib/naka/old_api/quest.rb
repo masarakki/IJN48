@@ -1,5 +1,5 @@
 module Naka
-  module Api
+  module OldApi
     module Quest
       def quests
         page = 1

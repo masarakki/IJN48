@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Naka::Api::Docks do
+describe Naka::OldApi::Docks do
   it 'call api' do
     stub_request(:post, "http://#{mock_user.api_host}/kcsapi/api_get_member/ndock").
       with(:body => {"api_token" => mock_user.api_token.to_s, "api_verno" => "1"}).

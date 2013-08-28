@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Naka::Api::Ships do
+describe Naka::OldApi::Ships do
   describe :fleets do
     it 'call api' do
       stub_request(:post, "http://#{mock_user.api_host}/kcsapi/api_get_member/deck").

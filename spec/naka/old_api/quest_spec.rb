@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 require 'spec_helper'
 
-describe Naka::Api::Quest do
+describe Naka::OldApi::Quest do
   describe :quests do
     it 'call api' do
       (1..3).each do |page|

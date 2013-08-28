@@ -1,26 +1,35 @@
+require 'naka/api/manager'
+require 'naka/api/base'
 require 'naka/api/client'
-require 'naka/api/ships'
-require 'naka/api/fleets'
-require 'naka/api/docks'
-require 'naka/api/repair'
-require 'naka/api/mission'
-require 'naka/api/supply'
+require 'naka/old_api/ships'
+require 'naka/old_api/fleets'
+require 'naka/old_api/docks'
+require 'naka/old_api/repair'
+require 'naka/old_api/mission'
+require 'naka/old_api/supply'
+require 'naka/old_api/factory'
+require 'naka/old_api/quest'
 require 'naka/api/factory'
-require 'naka/api/quest'
+
+module Naka
+  module Api
+    def api
+      @api_manager ||= Manager.new(self)
+    end
+  end
+
+  User.send(:include, Api)
+end
 
 module Naka
   class User
-    include Naka::Api::Ships
-    include Naka::Api::Docks
-    include Naka::Api::Repair
-    include Naka::Api::Mission
-    include Naka::Api::Fleets
-    include Naka::Api::Supply
-    include Naka::Api::Factory
-    include Naka::Api::Quest
-
-    def api
-      @client ||= Naka::Api::Client.new(self)
-    end
+    include Naka::OldApi::Ships
+    include Naka::OldApi::Docks
+    include Naka::OldApi::Repair
+    include Naka::OldApi::Mission
+    include Naka::OldApi::Fleets
+    include Naka::OldApi::Supply
+    include Naka::OldApi::Factory
+    include Naka::OldApi::Quest
   end
 end

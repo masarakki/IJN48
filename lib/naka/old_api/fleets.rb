@@ -1,5 +1,5 @@
 module Naka
-  module Api
+  module OldApi
     module Fleets
       def fleets
         response = api.post "/kcsapi/api_get_member/deck"
