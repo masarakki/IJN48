@@ -15,7 +15,7 @@ module Naka
       end
 
       def api_host
-        @api_hsot ||= "http://#{user.api_host}"
+        @api_host ||= "http://#{user.api_host}"
       end
 
       def post(path, args = {})
