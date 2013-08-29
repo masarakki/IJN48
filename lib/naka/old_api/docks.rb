@@ -1,5 +1,5 @@
 module Naka
-  module Api
+  module OldApi
     module Docks
       def docks
         response = api.post "/kcsapi/api_get_member/ndock", api_verno: 1

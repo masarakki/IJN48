@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Naka::Api::Supply do
+describe Naka::OldApi::Supply do
   describe :supply do
     it 'call api' do
       stub_request(:post, "http://#{mock_user.api_host}/kcsapi/api_req_hokyu/charge").

@@ -1,6 +1,6 @@
 require 'spec_helper'
 
-describe Naka::Api::Ships do
+describe Naka::OldApi::Ships do
   describe :ships do
     before do
       mock_user.stub(:ships_master) { build_list(:ship_master, 500) }
