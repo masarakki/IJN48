@@ -53,13 +53,13 @@ module Naka
 
     def create_ship(a, b, c, d)
       ships = user.ships_master
-      response = user.create_ship(a, b, c, d)
+      response = user.api.factory.ship.create(a, b, c, d)
       ship_id = response[:api_data][:api_ship_id]
       p ships.detect{|ship| ship.id == ship_id}
     end
 
     get '/create/cv' do
-      create_ship(300, 30, 600, 400)
+      create_ship(400, 30, 500, 700)
       :ok
     end
     get '/create/bb' do
@@ -67,11 +67,31 @@ module Naka
       :ok
     end
     get '/create/r-dd' do
-      create_ship(270, 30, 330, 130)
+      create_ship(250, 30, 200, 30)
       :ok
     end
     get '/create/cheap' do
       create_ship(30, 30, 30, 30)
+      :ok
+    end
+
+    def create_weapon(a, b, c, d)
+      user = User.first
+      response = user.api.factory.weapon.create(a, b, c, d)
+      if response[:api_data][:api_create_flag] == 0
+        p :fail
+      else
+        weapon_id = response[:api_data][:api_slotitem_id]
+        p user.api.factory.weapon.find(weapon_id).api_name
+      end
+    end
+
+    get '/weapon/saiun' do
+      create_weapon(20, 20, 10, 110)
+      :ok
+    end
+    get '/weapon/cheap' do
+      create_weapon(10, 10, 10, 10)
       :ok
     end
 

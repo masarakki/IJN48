@@ -1,5 +1,5 @@
 module Naka
-  module Api
+  module OldApi
     module Repair
       def repair(ship, dock = nil, cheat = false)
         dock = docks.select(&:blank?) unless dock

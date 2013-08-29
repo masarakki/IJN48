@@ -1,6 +1,6 @@
 # -*- coding: utf-8 -*-
 module Naka
-  module Api
+  module OldApi
     module Ships
       def ships_master
         redis_key = "naka:master:ships"

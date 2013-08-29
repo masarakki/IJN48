@@ -1,5 +1,5 @@
 module Naka
-  module Api
+  module OldApi
     module Supply
       def supply(ship_ids, kind = :both)
         kind = {fuel:1, bullet: 2, both: 3}[kind]
