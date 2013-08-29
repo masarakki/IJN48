@@ -47,12 +47,31 @@ module Naka
       }.to_json
     end
 
-    get '/create' do
+    def user
       user = User.first
+    end
+
+    def create_ship(a, b, c, d)
       ships = user.ships_master
-      response = user.create_ship(300, 30, 600, 400)
+      response = user.create_ship(a, b, c, d)
       ship_id = response[:api_data][:api_ship_id]
       p ships.detect{|ship| ship.id == ship_id}
+    end
+
+    get '/create/cv' do
+      create_ship(300, 30, 600, 400)
+      :ok
+    end
+    get '/create/bb' do
+      create_ship(400, 100, 600, 30)
+      :ok
+    end
+    get '/create/r-dd' do
+      create_ship(270, 30, 330, 130)
+      :ok
+    end
+    get '/create/cheap' do
+      create_ship(30, 30, 30, 30)
       :ok
     end
 
