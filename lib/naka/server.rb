@@ -59,7 +59,7 @@ module Naka
     end
 
     get '/create/cv' do
-      create_ship(300, 30, 600, 400)
+      create_ship(400, 30, 500, 700)
       :ok
     end
     get '/create/bb' do
@@ -67,7 +67,7 @@ module Naka
       :ok
     end
     get '/create/r-dd' do
-      create_ship(270, 30, 330, 130)
+      create_ship(250, 30, 200, 30)
       :ok
     end
     get '/create/cheap' do
