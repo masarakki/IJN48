@@ -1,6 +1,7 @@
 require 'naka/api/manager'
 require 'naka/api/base'
 require 'naka/api/client'
+require 'naka/api/master'
 require 'naka/old_api/ships'
 require 'naka/old_api/fleets'
 require 'naka/old_api/docks'
