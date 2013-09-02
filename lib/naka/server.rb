@@ -21,21 +21,21 @@ module Naka
       else
         strategy = Naka::Strategies::Repair.new(user)
       end
-      strategy.run
+      strategy.start
       :ok
     end
 
     get '/mission' do
       user = User.first
-      Naka::Strategies::Mission.new(user, [2, 9, 11]).run
-      :ok
+      Naka::Strategies::Mission.new(user, [3, 5, 6]).start
+      user.fleets.map(&:mission).compact.to_json
     end
 
     get '/supply' do
       user = User.first
       fleets = user.fleets
       ship_ids = fleets.select{|x| x.mission.nil? }.map(&:ship_ids).flatten.compact
-      Naka::Strategies::Supply.new(user, ship_ids).run
+      Naka::Strategies::Supply.new(user, ship_ids).start
       :ok
     end
 
