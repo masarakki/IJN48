@@ -101,7 +101,7 @@ module Naka
       quests.each do |quest|
         user.complete_quest(quest.id) if quest.completable?
       end
-      quests.to_json
+      user.quests.to_json
     end
   end
 end
