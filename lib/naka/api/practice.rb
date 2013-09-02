@@ -7,7 +7,15 @@ module Naka
       end
 
       def deck(practice)
-        request '/kcsapi/api_req_member/getothersdeck', api_member_id: deck.user_id
+        response = request '/kcsapi/api_req_member/getothersdeck', api_member_id: practice.user_id
+        master = @user.ships_master
+        ships = response[:api_data][:api_deck][:api_ships].reject{|x| x[:api_id] == -1}.map do |x|
+          ship = master.detect{|ship| ship.id == x[:api_ship_id] }
+          OpenStruct.new level: x[:api_level], master: ship
+        end
+        deck = Naka::Models::Deck.new
+        deck.ships = ships
+        deck
       end
 
       def battle(practice)
