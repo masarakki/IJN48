@@ -39,9 +39,15 @@ module Naka
       end
 
       def cheating
+        dock = docks.detect(&:blank?)
+        finish_force unless dock
         user.ships.each do |ship|
           user.repair(ship, nil, true) if ship.repairs_in > cheat_if_over_it
         end
+      end
+
+      def finish_force
+        user.finish_repair docks.sort_by(&:repairs_in).last
       end
 
       def cheat_if_over_it
