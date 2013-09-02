@@ -11,6 +11,7 @@ require 'naka/old_api/supply'
 require 'naka/old_api/factory'
 require 'naka/old_api/quest'
 require 'naka/api/factory'
+require 'naka/api/status'
 
 module Naka
   module Api
