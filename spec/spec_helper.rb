@@ -27,8 +27,13 @@ RSpec.configure do |config|
     example.example_group.let(:mock_user) { build(:user) }
   end
 
-  config.before { Naka::User.stub(:namespace) { "ijn48:naka:user:test" } }
+  config.before { Naka.stub(:redis_prefix) { "ijn48:test" } }
   config.after { Naka::User.send(:clean) }
+
+  config.before do
+    stub_request(:post, "http://0.0.0.0/kcsapi/api_get_master/ship").
+      to_return(status: 200, body: mock_file('api/ships/master.json'))
+  end
 
   def mock_file(path)
     File.read File.expand_path("../support/#{path}", __FILE__)

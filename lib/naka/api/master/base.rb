@@ -7,7 +7,7 @@ module Naka
         class NotFound < ::Exception ; end
 
         def self.cache(val)
-          define_method(:keyname) { "ijn48:naka:master:#{val}" }
+          define_method(:keyname) { [Naka.redis_prefix, "master:#{val}"].join(":") }
           private :keyname
         end
 
