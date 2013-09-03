@@ -7,6 +7,10 @@ module Naka
         def finished?
           finish_at < Time.now
         end
+
+        def to_json(options = {})
+          {id: id, finish_at: finish_at, finish_in: finish_at - Time.now}.to_json(options)
+        end
       end
 
       def self.from_api(response)
