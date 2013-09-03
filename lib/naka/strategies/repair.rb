@@ -54,7 +54,7 @@ module Naka
         nil
       end
 
-      def run
+      def run(quest_ids)
         return false unless docks.select(&:blank?)
         cheating if cheat_if_over_it
         docks.select(&:blank?).zip(damaged_ships).each do |dock, ship|

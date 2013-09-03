@@ -27,6 +27,7 @@ module Naka
       end
 
       def completable? ; state == 3 ; end
+      def accept? ; state == 2 || state == 3 ; end
       def no=(val) ; @id = val ; end
       def title=(val) ; @name = val ; end
       def clear_count=(val) ; @requires = val == -1 ? nil : val ; end
