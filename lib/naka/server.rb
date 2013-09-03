@@ -103,5 +103,13 @@ module Naka
       end
       user.quests.to_json
     end
+
+    get '/practice' do
+      user = User.first
+      practices = user.api.practice.all
+      practice = practices.detect{|x| !x.finished?}
+      Naka::Strategies::Practice.new(user, practice).start
+      :ok
+    end
   end
 end
