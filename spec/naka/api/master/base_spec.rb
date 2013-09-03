@@ -11,7 +11,7 @@ describe Naka::Api::Master::Base do
   let(:instance) { target_class.new(mock_user) }
   subject { instance }
   describe :keyname do
-    it { expect(subject.send(:keyname)).to eq 'ijn48:naka:master:tests' }
+    it { expect(subject.send(:keyname)).to eq 'ijn48:test:master:tests' }
   end
   describe :fetch_all do
     it 'should call api' do

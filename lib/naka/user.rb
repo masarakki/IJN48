@@ -66,7 +66,7 @@ module Naka
       end
 
       def namespace
-        "ijn48:naka:user"
+        [Naka.redis_prefix, "user"].join(":")
       end
 
       def clean

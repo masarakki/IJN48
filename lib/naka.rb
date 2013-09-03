@@ -11,4 +11,8 @@ module Naka
     @redis.client.reconnect unless @redis.client.connected?
     @redis
   end
+
+  def self.redis_prefix
+    "ijn48:naka"
+  end
 end
