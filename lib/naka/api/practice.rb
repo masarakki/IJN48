@@ -26,7 +26,7 @@ module Naka
         request '/kcsapi/api_req_practice/midnight_battle', api_enemy_id: practice.user_id, api_formation_id: 1, api_deck_id: 0
       end
 
-      def result(practice)
+      def result
         request '/kcsapi/api_req_practice/battle_result'
       end
     end
