@@ -27,7 +27,7 @@ module Naka
       end
 
       def result(practice)
-
+        request '/kcsapi/api_req_practice/battle_result'
       end
     end
 
