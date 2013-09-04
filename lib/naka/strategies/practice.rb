@@ -1,7 +1,7 @@
 module Naka
   module Strategies
     class Practice < Base
-      quest_ids 302, 304
+      quest_ids 302, 303, 304
 
       def initialize(user, practice)
         @user = user
