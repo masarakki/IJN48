@@ -2,6 +2,7 @@ module Naka
   module Strategies
     class Repair < Base
       name 'Repiar'
+      quest_ids 503
 
       def ships
         @ships ||= user.ships
