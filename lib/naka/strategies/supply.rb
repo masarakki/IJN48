@@ -1,6 +1,7 @@
 module Naka
   module Strategies
     class Supply < Base
+      quest_ids 504
 
       def initialize(user, ship_ids)
         @user = user
