@@ -16,7 +16,9 @@ module Naka
     # sample code to repair ship
     get '/repair' do
       user = User.first
-      if params["cheat"] == "true"
+      if params["finish_all"] == "true"
+        strategy = Naka::Strategies::RepairFirst.new(user)
+      elsif params["cheat"] == "true"
         strategy = Naka::Strategies::RepairWithCheating.new(user)
       else
         strategy = Naka::Strategies::Repair.new(user)
