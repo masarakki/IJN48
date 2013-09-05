@@ -18,9 +18,11 @@ module Naka
       end
 
       def start
+        res = nil
         QuestRunner.new(@user, quest_ids).run do |quest_ids|
-          run(quest_ids)
+          res = run(quest_ids)
         end
+        res
       end
 
       def run(quest_ids)

@@ -11,10 +11,10 @@ module Naka
       def run(quest_ids)
         response = @user.api.factory.weapon.create(*@materials)
         if response[:api_data][:api_create_flag] == 0
-          p :fail
+          nil
         else
           weapon_id = response[:api_data][:api_slotitem_id]
-          p @user.api.factory.weapon.find(weapon_id).api_name
+          @user.api.factory.weapon.find(weapon_id).api_name
         end
       end
     end
