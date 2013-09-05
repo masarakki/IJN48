@@ -56,11 +56,12 @@ module Naka
       end
 
       def run(quest_ids)
-        return false unless docks.select(&:blank?)
+        return docks unless docks.select(&:blank?)
         cheating if cheat_if_over_it
         docks.select(&:blank?).zip(damaged_ships).each do |dock, ship|
           user.repair(ship, dock) if dock && ship
         end
+        user.docks
       end
     end
   end
