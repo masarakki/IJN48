@@ -21,8 +21,12 @@ module Naka
       else
         strategy = Naka::Strategies::Repair.new(user)
       end
-      strategy.start
-      :ok
+      ships = user.ships
+      response = strategy.start
+      response.select(&:used?).map do |dock|
+        ship = ships.detect{|ship| ship.id == dock.ship_id}
+        {ship: ship.master.name, repairs_in: dock.repairs_in} if ship
+      end.to_json
     end
 
     get '/mission' do
