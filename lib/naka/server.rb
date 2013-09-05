@@ -78,13 +78,12 @@ module Naka
       Naka::Strategies::CreateWeapon.new(user, [a, b, c, d]).start
     end
 
-    get '/weapon/saiun' do
-      create_weapon(20, 20, 10, 110)
-      :ok
+    get '/weapon/aircraft' do
+      create_weapon(20, 60, 10, 210)
     end
+
     get '/weapon/cheap' do
       create_weapon(10, 10, 10, 10)
-      :ok
     end
 
     get '/quests' do
