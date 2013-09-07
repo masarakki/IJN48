@@ -14,7 +14,7 @@ namespace :crx do
   task :packaging => [:compile_coffee, :libraries, :manifest]  do
     CrxMake.make(
       ex_dir: tmp_dir,
-      crx_output: 'isuzu.crx',
+      crx_output: 'ijn48.crx',
       pkey: 'crx/key.pem',
       verbose: true
       )
