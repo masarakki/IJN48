@@ -106,5 +106,11 @@ module Naka
       Naka::Strategies::Practice.new(user, practice).start
       :ok
     end
+
+    get '/a-go' do
+      user = User.first
+      Naka::Strategies::Battle.new(user, 1, 1).start
+      :ok
+    end
   end
 end

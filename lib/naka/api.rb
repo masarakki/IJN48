@@ -13,6 +13,7 @@ require 'naka/old_api/quest'
 require 'naka/api/factory'
 require 'naka/api/status'
 require 'naka/api/practice'
+require 'naka/api/battle'
 
 module Naka
   module Api
