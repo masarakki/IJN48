@@ -1,7 +1,7 @@
 module Naka
   module Strategies
     class Mission < Base
-      quest_ids 402, 403
+      quest_ids 402, 403, 404
 
       def initialize(user, mission_ids = [])
         @user = user
