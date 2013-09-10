@@ -13,6 +13,14 @@ module Naka
       :ok
     end
 
+    get '/master/ships' do
+      User.first.ships_master.to_json
+    end
+
+    get "/master/map" do
+      User.first.api.master.map(params[:map].to_i, params[:area].to_i).to_json
+    end
+
     # sample code to repair ship
     get '/repair' do
       user = User.first

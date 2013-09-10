@@ -6,6 +6,8 @@ module Naka
         redis_key = "naka:master:ships"
         ships_master = Naka.redis.get(redis_key)
 
+        ship_types = api.master.ship_type
+
         if ships_master
           ships_master = MessagePack.unpack(ships_master)
         else
@@ -26,7 +28,7 @@ module Naka
           response = api.post "/kcsapi/api_get_master/ship"
           ships_master = response[:api_data].map do |ship|
             {
-              id: ship[:api_id], name: ship[:api_name], type: types[ship[:api_stype]],
+              id: ship[:api_id], name: ship[:api_name], type: ship_types.find(ship[:api_stype]).name,
               fuel: ship[:api_fuel_max], bullet: ship[:api_bull_max]
             }
           end
