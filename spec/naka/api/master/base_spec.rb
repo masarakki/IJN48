@@ -19,4 +19,38 @@ describe Naka::Api::Master::Base do
       instance.send(:fetch_all)
     end
   end
+
+  describe :parser do
+    it { expect(Naka::Api::Master::Map.parser).to eq Naka::Models::Master::Map }
+  end
+
+  context :requires_args do
+    let(:target_class) do
+      Class.new(Naka::Api::Master::Base) do
+        cache 'tests'
+        endpoint 'test'
+        args :map_id, :area_id
+      end
+    end
+    it 'args to required_args' do
+      expect(target_class.required_args).to eq [:map_id, :area_id]
+    end
+    it 'not change other class' do
+      expect(Naka::Api::Master::Ship.required_args).to eq []
+    end
+
+    describe :keyname do
+      it { expect(instance.send(:keyname, 1, 2)).to eq "ijn48:test:master:tests:1:2" }
+    end
+
+    describe :fetch_all do
+      it 'should call api' do
+        instance.should_receive(:request).with "/kcsapi/api_get_master/test", api_map_id: 1, api_area_id: 2
+        instance.send(:fetch_all, 1, 2)
+      end
+      it 'raise unless args enough' do
+        expect{ instance.send(:fetch_all, 1) }.to raise_error(ArgumentError)
+      end
+    end
+  end
 end

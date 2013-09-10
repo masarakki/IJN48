@@ -11,13 +11,12 @@ module Naka
       def_delegators :@client, :post, :post # TODO: remove it!
 
       class << self
-        def register(name, api)
-          define_method(name) do
+        def register(name, api, direct = false)
+          define_method(name) do |*args|
             val = instance_variable_get("@#{name}")
-            unless val
-              val = api.new(@user)
-              instance_variable_set("@#{name}", val)
-            end
+            val = api.new(@user)
+            val = val.all(*args) if direct
+            instance_variable_set("@#{name}", val)
             val
           end
         end

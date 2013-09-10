@@ -1,3 +1,4 @@
+require 'active_support/core_ext'
 require 'naka/server'
 require 'naka/user'
 require 'naka/models'
