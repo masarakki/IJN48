@@ -98,6 +98,7 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
+  activesupport
   coffee-script
   crxmake
   factory_girl

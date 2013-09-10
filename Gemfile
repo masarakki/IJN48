@@ -11,6 +11,7 @@ gem 'msgpack'
 gem 'rest-client'
 gem 'multi_json'
 gem 'yajl-ruby'
+gem 'activesupport'
 
 group :development, :test do
   gem 'rspec'
