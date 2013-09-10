@@ -21,7 +21,7 @@ module Naka
 
       def initialize(user, map_id, area_id)
         @user = user
-        @map = @user.api.battle.map(map_id, area_id)
+        @map = @user.api.master.map(map_id, area_id)
       end
 
       def run(mission_ids)

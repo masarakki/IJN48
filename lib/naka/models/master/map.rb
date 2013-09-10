@@ -1,33 +1,16 @@
 module Naka
   module Models
-    module Battle
+    module Master
       class Map
         attr_accessor :map_id, :area_id, :cells
 
         Cell = Struct.new(:id, :type) do
-          def start?
-            type == 0
-          end
-
-          def battle?
-            boss? || type == 4
-          end
-
-          def trap?
-            false
-          end
-
-          def item?
-            type == 2
-          end
-
-          def boss?
-            type == 5
-          end
-
-          def unknown?
-            !(start? || battle? || trap? || item? || boss?)
-          end
+          def start? ; type == 0 ; end
+          def battle? ; boss? || type == 4 ; end
+          def trap? ; type == 3 ; end
+          def item? ; type == 2 ; end
+          def boss? ; type == 5 ; end
+          def unknown? ; !(start? || battle? || trap? || item? || boss?) ; end
         end
 
         def self.from_api(res)
