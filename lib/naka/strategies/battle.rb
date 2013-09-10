@@ -34,10 +34,10 @@ module Naka
           if cell.battle?
             battle = @user.api.battle.battle(1)
             result = @user.api.battle.result
-            return if move.terminal?
-            move = @user.api.battle.next unless move.terminal?
-            p :continue
           end
+          return if move.terminal?
+          move = @user.api.battle.next unless move.terminal?
+          p :continue
         end
       end
     end
