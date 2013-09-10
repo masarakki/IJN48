@@ -31,6 +31,10 @@ module Naka
       def missionable?
         id != 1 && (mission.nil? || mission.finished?)
       end
+
+      def length
+        @ship_ids.compact.length
+      end
     end
   end
 end
