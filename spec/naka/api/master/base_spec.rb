@@ -39,6 +39,10 @@ describe Naka::Api::Master::Base do
       expect(Naka::Api::Master::Ship.required_args).to eq []
     end
 
+    describe :keyname do
+      it { expect(instance.send(:keyname, 1, 2)).to eq "ijn48:test:master:tests:1:2" }
+    end
+
     describe :fetch_all do
       it 'should call api' do
         instance.should_receive(:request).with "/kcsapi/api_get_master/test", api_map_id: 1, api_area_id: 2

@@ -12,7 +12,9 @@ module Naka
         end
 
         def self.cache(val)
-          define_method(:keyname) { [Naka.redis_prefix, "master:#{val}"].join(":") }
+          define_method(:keyname) do |*args|
+            ([Naka.redis_prefix, "master:#{val}"] + args).join(":")
+          end
           private :keyname
         end
 
@@ -22,7 +24,7 @@ module Naka
           end
 
           define_method(:fetch_all) do |*args|
-            if self.class.required_args == []
+            if self.class.required_args.length == 0
               request endpoint
             else
               hash = Hash[self.class.required_args.map{|x| "api_#{x}".to_sym}.zip(args)]
@@ -41,19 +43,16 @@ module Naka
         end
 
         def all(*args)
-          if args.length == 0
-            return @all if @all
-            items = Naka.redis.get keyname
-            if items
-              items = MessagePack.unpack(items)
-            else
-              items = update
-            end
-            @all = items.map{|x| OpenStruct.new(x) }
+          raise ArgumentError unless args.length == self.class.required_args.length
+          cache_keyname = keyname(*args)
+          items = Naka.redis.get cache_keyname
+          if items
+            items = MultiJson.decode(items, :symbolize_keys => true)
           else
             items = fetch_all(*args)
-            self.class.parser.from_api(items)
+            Naka.redis.set cache_keyname, MultiJson.encode(items)
           end
+          self.class.parser.from_api(items)
         end
 
         def find(*args)
