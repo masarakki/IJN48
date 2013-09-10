@@ -107,9 +107,15 @@ module Naka
       :ok
     end
 
-    get '/a-go' do
+    get '/battle/a-go' do
       user = User.first
       Naka::Strategies::Battle.new(user, 1, 1).start
+      :ok
+    end
+
+    get '/battle/sw' do
+      user = User.first
+      Naka::Strategies::Battle.new(user, 2, 2).start
       :ok
     end
   end
