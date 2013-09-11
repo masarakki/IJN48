@@ -2,6 +2,7 @@ require 'naka/api/master/base'
 require 'naka/api/master/ship'
 require 'naka/api/master/weapon'
 require 'naka/api/master/map'
+require 'naka/api/master/ship_type'
 
 module Naka
   module Api
@@ -10,6 +11,7 @@ module Naka
         register :ship, Ship
         register :weapon, Weapon
         register :map, Map, true
+        register :ship_type, ShipType, true
       end
       Naka::Api::Manager.register :master, Manager
     end

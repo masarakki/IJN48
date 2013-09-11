@@ -31,8 +31,10 @@ RSpec.configure do |config|
   config.after { Naka::User.send(:clean) }
 
   config.before do
-    stub_request(:post, "http://0.0.0.0/kcsapi/api_get_master/ship").
+    stub_request(:post, "http://#{mock_user.api_host}/kcsapi/api_get_master/ship").
       to_return(status: 200, body: mock_file('api/ships/master.json'))
+    stub_request(:post, "http://#{mock_user.api_host}/kcsapi/api_get_master/stype").
+      to_return(status: 200, body: mock_file('api/master/ship_type.json'))
   end
 
   def mock_file(path)
