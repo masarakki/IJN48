@@ -11,13 +11,14 @@
 221: ろ号
 226: 南海諸島制海権
 228: 海上護衛戦
-230: 潜水艦
+229: 東方艦隊
+230: 潜水艦6隻
 =end
 
 module Naka
   module Strategies
     class Battle < Base
-      quest_ids 201, 210, 211, 213, 214, 216, 218, 220, 221, 226, 228, 230
+      quest_ids 201, 210, 211, 213, 214, 216, 218, 220, 221, 226, 228, 229, 230
 
       def initialize(user, map_id, area_id)
         @user = user
