@@ -1,45 +1,60 @@
-!!! 5
-%h1 艦隊のアイドル、那珂ちゃんだよー!
-
-%ul
-  %li
-    出撃
-    %ul
-      %li
-        %a(href="/battle/a-go") 1-1 あ号作戦
-      %li
-        %a(href="/battle/sw") 2-2 南西海制海権
-  %li
-    修理
-    %ul
-      %li
-        %a(href="/repair") しゅうり
-      %li
-        %a(href="/repair?cheat=true") すごいしゅうり
-  %li
-    %a(href="/supply") ほきゅう
-  %li
-    %a(href="/mission") えんせい
-  %li
-    造船
-    %ul
-      %li
-        %a(href="/create/cv") くうぼ
-      %li
-        %a(href="/create/bb") せんかん
-      %li
-        %a(href="/create/r-dd") れあ
-      %li
-        %a(href="/create/cheap") びんぼう
-  %li
-    装備
-    %ul
-      %li
-        %a(href="/weapon/aircraft") ひこーき
-      %li
-        %a(href="/weapon/cheap") びんぼう
-  %li
-    %a(href="/quests") くえすと
-  %li
-    %a(href="/practice") えんしゅう
+.col-md-4
+  %h3 マスターデータ
+  %ul
+    %li
+      %a(href="/master/ships") ふね
+    %li
+      マップ
+      %ul
+        - 1.upto 4 do |i|
+          %li
+            = "#{i} - "
+            - 1.upto 4 do |j|
+              %a(href="/master/map?map=#{i}&area=#{j}")= "#{j}"
+.col-md-4
+  %h3 ユーザデータ
+  %ul
+    %li
+      %a(href="/quests") くえすと
+.col-md-4
+  %h3 操作
+  %ul
+    %li
+      出撃
+      %ul
+        %li
+          %a(href="/battle/a-go") 1-1 あ号作戦
+        %li
+          %a(href="/battle/sw") 2-2 南西海制海権
+    %li
+      修理
+      %ul
+        %li
+          %a(href="/repair") しゅうり
+        %li
+          %a(href="/repair?cheat=true") すごいしゅうり
+    %li
+      %a(href="/supply") ほきゅう
+    %li
+      %a(href="/mission") えんせい
+    %li
+      造船
+      %ul
+        %li
+          %a(href="/create/cv") くうぼ
+        %li
+          %a(href="/create/bb") せんかん
+        %li
+          %a(href="/create/r-dd") れあ
+        %li
+          %a(href="/create/cheap") びんぼう
+    %li
+      装備
+      %ul
+        %li
+          %a(href="/weapon/aircraft") ひこーき
+        %li
+          %a(href="/weapon/cheap") びんぼう
+    %li
+      %a(href="/practice") えんしゅう
 
