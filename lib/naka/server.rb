@@ -126,5 +126,11 @@ module Naka
       Naka::Strategies::Battle.new(user, 2, 2).start
       :ok
     end
+
+    get '/battle/3-2' do
+      user = User.first
+      Naka::Strategies::Battle.new(user, 3, 2, {:one => true}).start
+      :ok
+    end
   end
 end

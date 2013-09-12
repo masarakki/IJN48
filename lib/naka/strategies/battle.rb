@@ -20,9 +20,10 @@ module Naka
     class Battle < Base
       quest_ids 201, 210, 211, 213, 214, 216, 218, 220, 221, 226, 228, 229, 230
 
-      def initialize(user, map_id, area_id)
+      def initialize(user, map_id, area_id, options = {})
         @user = user
         @map = @user.api.master.map(map_id, area_id)
+        @options = options
       end
 
       def run(mission_ids)
@@ -36,6 +37,7 @@ module Naka
             battle = @user.api.battle.battle(1)
             result = @user.api.battle.result
           end
+          return if @options[:one]
           return if move.terminal?
           move = @user.api.battle.next unless move.terminal?
           p :continue
