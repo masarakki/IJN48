@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 module Naka
   module Models
     class Ship
@@ -16,9 +17,17 @@ module Naka
         end
       end
 
+      def pure_name
+        name = @master.name
+        return '千歳' if name =~ /^千歳/
+        return '千代田' if name =~ /^千代田/
+        name.gsub /改二?$/, ''
+      end
+
       def bullet ; @bull ; end
       def locked? ; @locked ; end
       def damaged? ; @hp.damaged? ; end
+      def high? ; @condition == 55 ; end
       def tired? ; @condition <= 30 ; end
       def danger? ; tired? || hp.danger? ; end
       def consumed? ; ! (master.bullet == bullet && master.fuel == fuel) ; end

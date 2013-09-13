@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 require 'spec_helper'
 
 describe Naka::Models::Ship do
@@ -28,6 +29,21 @@ describe Naka::Models::Ship do
     context :used do
       before { ship.master = OpenStruct.new(:fuel => 20, :bullet => 45) }
       it { should be_consumed }
+    end
+  end
+
+  describe :pure_name do
+    it '千代田甲 should eq 千代田' do
+      ship.master = OpenStruct.new(name: '千代田甲')
+      expect(ship.pure_name).to eq '千代田'
+    end
+    it '大井改二 should eq 大井' do
+      ship.master = OpenStruct.new(name: '大井改二')
+      expect(ship.pure_name).to eq '大井'
+    end
+    it '電改 should eq 電' do
+      ship.master = OpenStruct.new(name: '電改')
+      expect(ship.pure_name).to eq '電'
     end
   end
 
