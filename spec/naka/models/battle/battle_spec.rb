@@ -55,4 +55,15 @@ describe Naka::Models::Battle::Battle do
     its(:enemy_hps) { should == [[33, 33], [0, 20], [0, 20]] }
     its(:fleet_hps) { should == [[30, 37]] }
   end
+
+  describe 'compatible with practice' do
+    before do
+      stub_request(:post, "http://#{mock_user.api_host}/kcsapi/api_req_practice/battle").
+        to_return(status: 200, body: mock_file("api/practice/battle.json"))
+    end
+    let(:battle) { mock_user.api.practice.battle(double(user_id: 1)) }
+    it { should be_a described_class }
+    its(:enemy_hps) { should == [[0, 75]] }
+    it { should be_completed }
+  end
 end
