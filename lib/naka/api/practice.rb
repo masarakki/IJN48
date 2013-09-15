@@ -19,7 +19,8 @@ module Naka
       end
 
       def battle(practice)
-        request '/kcsapi/api_req_practice/battle', api_enemy_id: practice.user_id, api_deck_id: 1, api_formation_id: 1
+        response = request '/kcsapi/api_req_practice/battle', api_enemy_id: practice.user_id, api_deck_id: 1, api_formation_id: 1
+        Naka::Models::Battle::Battle.from_api(response)
       end
 
       def midnight(practice)

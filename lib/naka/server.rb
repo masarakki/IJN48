@@ -118,19 +118,21 @@ module Naka
     get '/battle/a-go' do
       user = User.first
       Naka::Strategies::Battle.new(user, 1, 1).start
-      :ok
     end
 
     get '/battle/sw' do
       user = User.first
       Naka::Strategies::Battle.new(user, 2, 2).start
-      :ok
     end
 
     get '/battle/3-2' do
       user = User.first
       Naka::Strategies::Battle.new(user, 3, 2, {:one => true}).start
-      :ok
+    end
+
+    get '/battle/4-1' do
+      user = User.first
+      Naka::Strategies::Battle.new(user, 4, 1).start
     end
   end
 end
