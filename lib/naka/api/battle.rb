@@ -7,7 +7,8 @@ module Naka
       end
 
       def battle(formation = 1)
-        request '/kcsapi/api_req_sortie/battle', api_formation: formation
+        response = request '/kcsapi/api_req_sortie/battle', api_formation: formation
+        Naka::Models::Battle::Battle.from_api(response)
       end
 
       def midnight
