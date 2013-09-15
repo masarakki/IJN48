@@ -34,15 +34,15 @@ module Naka
         p @user.fleets.first.ship_ids.map{|x| user_ships.detect{|ship| ship.id == x}.master.name }
         loop do
           cell = @map.find(move.cell_id)
-          p [:boss?, cell.boss?]
           if cell.battle?
-            battle = @user.api.battle.battle(1)
+            p [:boss?, cell.boss?]
+            battle = @user.api.battle.battle(@options[:formation] || 1)
             result = @user.api.battle.result
+            return "損傷撤退" if battle.fleet_hps.any? {|x| (x.first.to_f / x.last) <= 0.5 }
           end
-          return if @options[:one]
-          return if move.terminal?
+          return "予定撤退" if @options[:one]
+          return "完了" if move.terminal?
           move = @user.api.battle.next unless move.terminal?
-          p :continue
         end
       end
     end
