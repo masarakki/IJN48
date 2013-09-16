@@ -14,16 +14,15 @@ module Naka
     end
 
     get '/master/ships' do
-      User.first.ships_master.to_json
+      user.ships_master.to_json
     end
 
     get "/master/map" do
-      User.first.api.master.map(params[:map].to_i, params[:area].to_i).to_json
+      user.api.master.map(params[:map].to_i, params[:area].to_i).to_json
     end
 
     # sample code to repair ship
     get '/repair' do
-      user = User.first
       if params["cheat"] == "true"
         strategy = Naka::Strategies::RepairWithCheating.new(user)
       else
@@ -38,13 +37,11 @@ module Naka
     end
 
     get '/mission' do
-      user = User.first
       Naka::Strategies::Mission.new(user, [3, 5, 6]).start
       user.fleets.map(&:mission).compact.to_json
     end
 
     get '/supply' do
-      user = User.first
       fleets = user.fleets
       ship_ids = fleets.select{|x| x.mission.nil? }.map(&:ship_ids).flatten.compact
       Naka::Strategies::Supply.new(user, ship_ids).start
@@ -52,15 +49,10 @@ module Naka
     end
 
     get '/ships' do
-      user = User.first
       ships = user.ships_master
       ships.map {|id, item|
         item.to_h
       }.to_json
-    end
-
-    def user
-      user = User.first
     end
 
     def create_ship(a, b, c, d)
@@ -86,7 +78,6 @@ module Naka
     end
 
     def create_weapon(a, b, c, d)
-      user = User.first
       Naka::Strategies::CreateWeapon.new(user, [a, b, c, d]).start
     end
 
@@ -99,7 +90,6 @@ module Naka
     end
 
     get '/quests' do
-      user = User.first
       quests = user.quests
       quests.each do |quest|
         user.complete_quest(quest.id) if quest.completable?
@@ -108,7 +98,6 @@ module Naka
     end
 
     get '/practice' do
-      user = User.first
       practices = user.api.practice.all
       practice = practices.detect{|x| !x.finished?}
       Naka::Strategies::Practice.new(user, practice).start
@@ -121,18 +110,23 @@ module Naka
     end
 
     get '/battle/sw' do
-      user = User.first
       Naka::Strategies::Battle.new(user, 2, 2).start
     end
 
+    get '/battle/iro-go' do
+      Naka::Strategies::Battle.new(user, 2, 3).start
+    end
+
     get '/battle/3-2' do
-      user = User.first
       Naka::Strategies::Battle.new(user, 3, 2, {:one => true}).start
     end
 
     get '/battle/4-1' do
-      user = User.first
       Naka::Strategies::Battle.new(user, 4, 1).start
+    end
+
+    def user
+      User.first
     end
   end
 end
