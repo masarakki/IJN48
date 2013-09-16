@@ -23,7 +23,7 @@ module Naka
 
       def change_normal
         user_ships = user.ships
-        fleet_ships = @fleet.ship_ids.map{|ship_id| user_ships.detect{|x| x.id == ship_id} }
+        fleet_ships = @fleet.ship_ids.map{|ship_id| user_ships.detect{|x| x.id == ship_id} }.compact
         using_ship_ids = user.fleets.map{|x| x.ship_ids }.flatten.compact
         fleet_ship_names = fleet_ships.map(&:pure_name)
         fleet_ships.each_with_index do |ship, index|

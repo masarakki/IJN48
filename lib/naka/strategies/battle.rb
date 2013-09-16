@@ -31,7 +31,7 @@ module Naka
         move = @user.api.battle.start(@map.map_id, @map.area_id)
         Naka::Strategies::Supply.new(@user, @user.fleets.first.ship_ids.compact).start
         user_ships = @user.ships
-        p @user.fleets.first.ship_ids.map{|x| user_ships.detect{|ship| ship.id == x}.master.name }
+        p @user.fleets.first.ship_ids.compact.map{|x| user_ships.detect{|ship| ship.id == x}.master.name }
         loop do
           cell = @map.find(move.cell_id)
           if cell.battle?
