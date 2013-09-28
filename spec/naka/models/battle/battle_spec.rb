@@ -59,9 +59,9 @@ describe Naka::Models::Battle::Battle do
   describe 'compatible with practice' do
     before do
       stub_request(:post, "http://#{mock_user.api_host}/kcsapi/api_req_practice/battle").
-        to_return(status: 200, body: mock_file("api/practice/battle.json"))
+        to_return(status: 200, body: mock_file("api/user/practice/battle.json"))
     end
-    let(:battle) { mock_user.api.practice.battle(double(user_id: 1)) }
+    let(:battle) { mock_user.api.user.practice.battle(double(user_id: 1)) }
     it { should be_a described_class }
     its(:enemy_hps) { should == [[0, 75]] }
     it { should be_completed }

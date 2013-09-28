@@ -98,7 +98,7 @@ module Naka
     end
 
     get '/practice' do
-      practices = user.api.practice.all
+      practices = user.api.user.practice.all
       practice = practices.detect{|x| !x.finished?}
       Naka::Strategies::Practice.new(user, practice).start
       :ok

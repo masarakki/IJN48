@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
 require 'spec_helper'
 
-describe Naka::Api::Practice do
-  let(:api) { mock_user.api.practice }
+describe Naka::Api::User::Practice do
+  let(:api) { mock_user.api.user.practice }
   let(:practice) { double(user_id: 1) }
 
   describe :all do
     before do
       stub_request(:post, "http://#{mock_user.api_host}/kcsapi/api_get_member/practice").to_return(
-        :status => 200, :body => mock_file('api/practice/all.json'))
+        :status => 200, :body => mock_file('api/user/practice/all.json'))
     end
 
     describe :first do
@@ -30,7 +30,7 @@ describe Naka::Api::Practice do
   describe :deck do
     before do
       stub_request(:post, "http://#{mock_user.api_host}/kcsapi/api_req_member/getothersdeck").to_return(
-        :status => 200, :body => mock_file('api/practice/deck.json'))
+        :status => 200, :body => mock_file('api/user/practice/deck.json'))
     end
 
     subject { api.deck(practice) }
