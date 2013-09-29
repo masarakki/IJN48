@@ -22,8 +22,9 @@ module Naka
           define_method(:endpoint) do
             "/kcsapi/api_get_master/#{val}"
           end
+          private :endpoint
 
-          define_method(:fetch_all) do |*args|
+          define_method(:api_response) do |*args|
             if self.class.required_args.length == 0
               request endpoint
             else
@@ -32,6 +33,7 @@ module Naka
               request endpoint, hash
             end
           end
+          private :api_response
         end
 
         def self.args(*arg_names)
@@ -49,7 +51,7 @@ module Naka
           if items
             items = MultiJson.decode(items, :symbolize_keys => true)
           else
-            items = fetch_all(*args)
+            items = api_response(*args)
             Naka.redis.set cache_keyname, MultiJson.encode(items)
           end
           self.class.parser.from_api(items)

@@ -10,18 +10,20 @@ describe Naka::Api::Master::Base do
 
   let(:instance) { target_class.new(mock_user) }
   subject { instance }
+
   describe :keyname do
     it { expect(subject.send(:keyname)).to eq 'ijn48:test:master:tests' }
-  end
-  describe :fetch_all do
-    it 'should call api' do
-      instance.should_receive(:request).with "/kcsapi/api_get_master/test"
-      instance.send(:fetch_all)
-    end
   end
 
   describe :parser do
     it { expect(Naka::Api::Master::Map.parser).to eq Naka::Models::Master::Map }
+  end
+
+  describe :build do
+    it {
+      p mock_user.api.master.ship
+      p mock_user.api.master.ship.find(14)
+    }
   end
 
   context :requires_args do
@@ -43,13 +45,13 @@ describe Naka::Api::Master::Base do
       it { expect(instance.send(:keyname, 1, 2)).to eq "ijn48:test:master:tests:1:2" }
     end
 
-    describe :fetch_all do
+    describe :api_response do
       it 'should call api' do
         instance.should_receive(:request).with "/kcsapi/api_get_master/test", api_map_id: 1, api_area_id: 2
-        instance.send(:fetch_all, 1, 2)
+        instance.send(:api_response, 1, 2)
       end
       it 'raise unless args enough' do
-        expect{ instance.send(:fetch_all, 1) }.to raise_error(ArgumentError)
+        expect{ instance.send(:api_response, 1) }.to raise_error(ArgumentError)
       end
     end
   end

@@ -8,7 +8,7 @@ module Naka
   module Api
     module Master
       class Manager < Naka::Api::Manager
-        register :ship, Ship
+        register :ship, Ship, true
         register :weapon, Weapon
         register :map, Map, true
         register :ship_type, ShipType, true

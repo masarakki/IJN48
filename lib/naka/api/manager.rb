@@ -13,11 +13,12 @@ module Naka
       class << self
         def register(name, api, direct = false)
           define_method(name) do |*args|
-            val = instance_variable_get("@_api_#{name}")
+            keyname = (["@_api", name] + args).join("_")
+            val = instance_variable_get(keyname)
             unless val
               val = api.new(@user)
               val = val.all(*args) if direct
-              instance_variable_set("@_api_#{name}", val)
+              instance_variable_set(keyname, val)
             end
             val
           end

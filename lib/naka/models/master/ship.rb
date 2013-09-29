@@ -1,13 +1,17 @@
 module Naka
   module Models
     module Master
-      Ship = Struct.new(:id, :name) do
+      class Ship < Naka::Models::Base
+        attr_accessor :name
+        def initialize(options = {})
+          @id = options[:id]
+          @name = options[:name]
+        end
+
         def self.from_api(response)
-          collection = Collection.new
           response[:api_data].each do |data|
-            collection << new(data[:api_id], data[:api_name])
+            self.register(id: data[:api_id], name: data[:api_name])
           end
-          collection
         end
       end
     end
