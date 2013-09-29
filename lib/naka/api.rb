@@ -20,7 +20,10 @@ require 'naka/api/deck'
 module Naka
   module Api
     def api
-      @api_manager ||= Manager.new(self)
+      @api_manager ||= Class.new(Manager) {
+        register :user, User::Manager
+        register :master, Master::Manager
+      }.new(self)
     end
   end
 

@@ -4,6 +4,7 @@ module Naka
   module Api
     class Base
       extend Forwardable
+      attr_reader :user
 
       def initialize(user)
         @user = user

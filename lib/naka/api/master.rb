@@ -13,7 +13,6 @@ module Naka
         register :map, Map, true
         register :ship_type, ShipType, true
       end
-      Naka::Api::Manager.register :master, Manager
     end
   end
 end
