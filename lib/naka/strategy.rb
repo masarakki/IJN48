@@ -55,7 +55,10 @@ module Naka
         end
 
         def finish
-          @user.quests.select(&:completable?).each {|quest| @user.complete_quest(quest.id) }
+          @user.quests.select(&:completable?).each do |quest|
+            @user.complete_quest(quest.id)
+            p "Complete quest #{quest.id}: #{quest.name}"
+          end
         end
 
         def restore
