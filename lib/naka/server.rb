@@ -104,25 +104,16 @@ module Naka
       :ok
     end
 
-    get '/battle/a-go' do
-      user = User.first
-      Naka::Strategies::Battle.new(user, 1, 1).start
+    [4, 4, 4, 4, 2].each_with_index do |areas, map|
+      areas.times do |area|
+        get "/battle/#{map+1}-#{area+1}" do
+          Naka::Strategies::Battle.new(user, map + 1, area + 1).start
+        end
+      end
     end
 
-    get '/battle/sw' do
-      Naka::Strategies::Battle.new(user, 2, 2).start
-    end
-
-    get '/battle/iro-go' do
-      Naka::Strategies::Battle.new(user, 2, 3).start
-    end
-
-    get '/battle/3-2' do
+    get '/battle/3-2-1' do
       Naka::Strategies::Battle.new(user, 3, 2, {:one => true}).start
-    end
-
-    get '/battle/4-1' do
-      Naka::Strategies::Battle.new(user, 4, 1).start
     end
 
     def user
