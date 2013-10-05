@@ -30,7 +30,14 @@ module Naka
       end
 
       get '/fleets' do
-        user.fleets.to_json
+        ships = user.ships
+        fleets = user.fleets
+        fleets.map do |fleet|
+          fleet.ships = fleet.ship_ids.compact.map do |ship_id|
+            ships.detect{|ship| ship.id == ship_id}
+          end
+        end
+        fleets.to_json
       end
 
       get '/status' do
