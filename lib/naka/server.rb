@@ -16,6 +16,10 @@ module Naka
       :ok
     end
 
+    get '/game' do
+      redirect "http://#{user.api_host}/kcs/mainD2.swf?api_token=#{user.api_token}&api_starttime=#{user.api_at}"
+    end
+
     get '/master/ships' do
       user.ships_master.to_json
     end
