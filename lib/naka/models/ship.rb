@@ -27,8 +27,9 @@ module Naka
       def bullet ; @bull ; end
       def locked? ; @locked ; end
       def damaged? ; @hp.damaged? ; end
-      def high? ; @condition == 55 ; end
-      def tired? ; @condition <= 30 ; end
+      def high? ; @condition >= 50 ; end
+      def good? ; @condition >= 40 ; end
+      def tired? ; @condition < 30 ; end
       def danger? ; tired? || hp.danger? ; end
       def consumed? ; ! (master.bullet == bullet && master.fuel == fuel) ; end
 

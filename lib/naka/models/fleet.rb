@@ -1,7 +1,7 @@
 module Naka
   module Models
     class Fleet
-      attr_accessor :id, :name, :mission, :ship_ids
+      attr_accessor :id, :name, :mission, :ship_ids, :ships
 
       Mission = Struct.new(:id, :finish_at) do
         def finished?

@@ -22,7 +22,7 @@ FactoryGirl.define do
     end
 
     trait :tired do
-      condition 30
+      condition 29
     end
   end
 
