@@ -27,6 +27,7 @@ module Naka
         fleets.select(&:missionable?).zip(mission_ids).each do |fleet, mission_id|
           begin
             p "mission_result: fleet=#{fleet.id}, mission=#{fleet.mission.id}, result=#{user.mission_result(fleet.id)}" if fleet.mission
+            Naka::Strategies::Organize.new(user, fleet.id, damaged: true).start
             Naka::Strategies::Supply.new(user, fleet.ship_ids.compact).start
             user.start_mission(fleet.id, mission_id) if fleet && mission_id
           end
