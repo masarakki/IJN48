@@ -21,10 +21,38 @@ module Naka
         end
       end
 
+      def user_ships
+        @user_ships ||= user.ships
+      end
+
+      def fleet_ships
+        @fleet.ship_ids.map{|ship_id| user_ships.detect{|x| x.id == ship_id} }.compact
+      end
+
+      def using_ship_ids
+        using_ship_ids ||= user.fleets.map{|x| x.ship_ids}.flatten.compact
+      end
+
+      def change_abnormal
+        fleet_ship_names = fleet_ships.map(&:pure_name)
+        fleet_ships.each_with_index do |ship, index|
+          if ship && ship.tired?
+            other_names = fleet_ship_names - [ship.pure_name]
+            type = ship.master.type
+            candidate = user_ships.select do |can|
+              !using_ship_ids.include?(can.id) &&
+                can.locked? && can.master.type == type &&
+                !can.tired? && !other_names.include?(can.pure_name)
+            end.sample
+            raise unless candidate
+            user.api.deck.change(@fleet_id, index, candidate.id)
+            fleet_ship_names = other_names + [candidate.pure_name]
+          end
+        end
+        fleet_ship_names
+      end
+
       def change_normal
-        user_ships = user.ships
-        fleet_ships = @fleet.ship_ids.map{|ship_id| user_ships.detect{|x| x.id == ship_id} }.compact
-        using_ship_ids = user.fleets.map{|x| x.ship_ids }.flatten.compact
         fleet_ship_names = fleet_ships.map(&:pure_name)
         fleet_ships.each_with_index do |ship, index|
           if ship && ship.danger?
@@ -32,10 +60,8 @@ module Naka
             type = ship.master.type
             candidate = user_ships.select do |can|
               !using_ship_ids.include?(can.id) &&
-                can.locked? &&
-                can.master.type == type &&
-                !can.danger? &&
-                !other_names.include?(can.pure_name)
+                can.locked? && can.master.type == type &&
+                !can.danger? && !other_names.include?(can.pure_name)
             end.sample
             raise unless candidate
             user.api.deck.change(@fleet_id, index, candidate.id)
