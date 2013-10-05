@@ -1,9 +1,12 @@
 require 'sinatra/base'
+require 'sinatra/namespace'
 require 'haml'
 require 'json'
 
 module Naka
   class Server < Sinatra::Base
+    register Sinatra::Namespace
+
     get '/' do
       haml :index
     end
@@ -19,6 +22,20 @@ module Naka
 
     get "/master/map" do
       user.api.master.map(params[:map].to_i, params[:area].to_i).to_json
+    end
+
+    namespace '/user' do
+      get '/ships' do
+        user.ships.to_json
+      end
+
+      get '/fleets' do
+        user.fleets.to_json
+      end
+
+      get '/status' do
+        user.api.status.materials.to_json
+      end
     end
 
     # sample code to repair ship
