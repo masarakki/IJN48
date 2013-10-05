@@ -30,7 +30,7 @@ module Naka
       end
 
       def using_ship_ids
-        using_ship_ids ||= user.fleets.map{|x| x.ship_ids}.flatten.compact
+        @using_ship_ids ||= user.fleets.map{|x| x.ship_ids}.flatten.compact
       end
 
       def change_abnormal
