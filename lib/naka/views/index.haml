@@ -11,6 +11,14 @@
             = "#{i} - "
             - 1.upto 4 do |j|
               %a.btn(href="/master/map?map=#{i}&area=#{j}")= "#{j}"
+  %h3 ユーザデータ
+  %ul
+    %li
+      %a(href="/user/fleets") かんたい
+    %li
+      %a(href="/user/ships") ふね
+    %li
+      %a(href="/user/status") すてーたす
 .col-md-4
   %h3 出撃
   %ul
