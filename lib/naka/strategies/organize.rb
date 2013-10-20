@@ -35,6 +35,7 @@ module Naka
 
       def change_abnormal
         fleet_ship_names = fleet_ships.map(&:pure_name)
+        fleet_ship_ids = fleet_ships.map(&:id)
         fleet_ships.each_with_index do |ship, index|
           if ship && ship.tired?
             other_names = fleet_ship_names - [ship.pure_name]
@@ -46,10 +47,12 @@ module Naka
             end.sample
             raise unless candidate
             user.api.deck.change(@fleet_id, index, candidate.id)
+            fleet_ship_ids -= [ship.id]
+            fleet_ship.ids += [can.id]
             fleet_ship_names = other_names + [candidate.pure_name]
           end
         end
-        fleet_ship_names
+        fleet_ship_ids
       end
 
       def change_normal
