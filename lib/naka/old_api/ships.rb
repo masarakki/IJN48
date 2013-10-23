@@ -2,13 +2,13 @@
 module Naka
   module OldApi
     module Ships
-      def ships_master
+      def ships_master(reload = false)
         redis_key = "naka:master:ships"
         ships_master = Naka.redis.get(redis_key)
 
         ship_types = api.master.ship_type
 
-        if ships_master
+        if !reload && ships_master
           ships_master = MessagePack.unpack(ships_master)
         else
           types = {
@@ -42,6 +42,10 @@ module Naka
         response = api.post "/kcsapi/api_get_member/ship2", api_sort_order: 2, api_sort_key: 1
         response[:api_data].map do |ship|
           master_ship = ships.detect{|master_ship| master_ship.id == ship[:api_ship_id] }
+          unless master_ship
+            ships = ships_master(true)
+            master_ship = ships.detect{|master_ship| master_ship.id == ship[:api_ship_id] }
+          end
           Naka::Models::Ship.new(ship.merge(api_master: master_ship))
         end
       end
