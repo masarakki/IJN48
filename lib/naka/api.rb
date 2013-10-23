@@ -15,6 +15,7 @@ require 'naka/api/status'
 require 'naka/api/practice'
 require 'naka/api/battle'
 require 'naka/api/deck'
+require 'naka/api/ship'
 
 module Naka
   module Api
