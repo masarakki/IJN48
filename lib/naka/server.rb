@@ -33,8 +33,8 @@ module Naka
         user.ships.to_json
       end
 
-      get '/ship/destroy' do
-        Naka::strategies::DestroyShips.new(user).start.to_json
+      get '/ships/destroy' do
+        Naka::Strategies::DestroyShips.new(user).start.to_json
       end
 
       get '/fleets' do
