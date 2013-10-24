@@ -33,12 +33,17 @@ module Naka
         user_ships = @user.ships
         p @user.fleets.first.ship_ids.compact.map{|x| user_ships.detect{|ship| ship.id == x}.master.name }
         loop do
-          cell = @map.find(move.cell_id)
-          if cell.battle?
-            p [:boss?, cell.boss?]
-            battle = @user.api.battle.battle(@options[:formation] || 1)
+          if move.battle?
+            p [:boss?, move.boss?]
+            if move.midnight?
+              battle = @user.api.battle.midnight_battle(@options[:formation] || 1)
+            else
+              battle = @user.api.battle.battle(@options[:formation] || 1)
+            end
             result = @user.api.battle.result
             return "損傷撤退" if battle.fleet_hps.any? {|x| (x.first.to_f / x.last) <= 0.5 }
+          else
+            p :skip
           end
           return "予定撤退" if @options[:one]
           return "完了" if move.terminal?

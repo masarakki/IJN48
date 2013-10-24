@@ -14,11 +14,17 @@ describe Naka::Models::Battle::Move do
       before { stub_request(:any, //).to_return(body: mock_file('api/battle/start/1-2-E.json')) }
       it { should_not be_terminal }
       its(:cell_id) { should == 1 }
+      it { should_not be_boss }
+      it { should_not be_skippable }
+      it { should_not be_midnight }
     end
     context :to_south do
       before { stub_request(:any, //).to_return(body: mock_file('api/battle/start/1-2-S.json')) }
       it { should_not be_terminal }
       its(:cell_id) { should == 2 }
+      it { should_not be_boss }
+      it { should be_skippable }
+      it { should_not be_midnight }
     end
   end
 
@@ -29,6 +35,8 @@ describe Naka::Models::Battle::Move do
       it { should be_a described_class }
       it { should be_boss }
       it { should be_terminal }
+      it { should_not be_skippable }
+      it { should_not be_midnight }
     end
 
     context 'terminal_not_boss' do
@@ -36,6 +44,24 @@ describe Naka::Models::Battle::Move do
       it { should be_a described_class }
       it { should_not be_boss }
       it { should be_terminal }
+      it { should_not be_skippable }
+      it { should_not be_midnight }
+    end
+
+    context 'skip' do
+      before { stub_request(:any, //).to_return(body: mock_file('api/battle/next/skip.json')) }
+      it { should be_a described_class }
+      it { should_not be_terminal }
+      it { should be_skippable }
+      it { should_not be_midnight }
+    end
+
+    context 'midnight' do
+      before { stub_request(:any, //).to_return(body: mock_file('api/battle/next/midnight.json')) }
+      it { should be_a described_class }
+      it { should_not be_terminal }
+      it { should_not be_skippable }
+      it { should be_midnight }
     end
   end
 end

@@ -23,6 +23,11 @@ module Naka
         response = request '/kcsapi/api_req_map/next'
         Naka::Models::Battle::Move.from_api(response)
       end
+
+      def midnight_battle(formation = 1)
+        response = request '/kcsapi/api_req_battle_midnight/sp_midnight', api_formation: formation
+        Naka::Models::Battle::MidnightBattle.from_api(response)
+      end
     end
 
     Manager.register :battle, Battle
