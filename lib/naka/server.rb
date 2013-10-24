@@ -136,7 +136,7 @@ module Naka
       :ok
     end
 
-    [4, 4, 4, 4, 2].each_with_index do |areas, map|
+    [4, 4, 4, 4, 3].each_with_index do |areas, map|
       areas.times do |area|
         get "/battle/#{map+1}-#{area+1}" do
           Naka::Strategies::Battle.new(user, map + 1, area + 1).start
