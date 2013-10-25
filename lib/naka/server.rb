@@ -69,7 +69,7 @@ module Naka
     end
 
     get '/mission' do
-      Naka::Strategies::Mission.new(user, [3, 5, 6]).start
+      Naka::Strategies::Mission.new(user).start
       user.fleets.map(&:mission).compact.to_json
     end
 
