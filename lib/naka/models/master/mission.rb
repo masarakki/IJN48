@@ -41,7 +41,7 @@ Naka::Models::Master::Mission.setup do
   register id: 12, time: 480, cost: [0.5, 0.0], reward: {fuel: 50, bullet: 250, steel: 200, bauxite: 50}, fleet: {dd: 2, any: 2}
   register id: 13, time: 240, cost: [0.5, 0.4], reward: {fuel: 240, bullet: 300, repair: 2}, fleet: {cl: 1, dd:4, any: 1}
   register id: 14, time: 360, cost: [0.5, 0.0], reward: {bullet: 240, steel: 200, repair: 1}, fleet: {cl: 1, dd: 3, any: 2}
-  register id: 15, time: 720, cost: [0.5, 0.4], reward: {steel: 300, bauxite: 400}, fleet: {cl: 2, dd: 2, any: 2}
+  register id: 15, time: 720, cost: [0.5, 0.4], reward: {steel: 300, bauxite: 400}, fleet: {cv: 2, dd: 2, any: 2}
   register id: 16, time: 900, cost: [0.5, 0.4], reward: {fuel: 500, bullet: 500, steel: 200, bauxite: 200, repair: 2}, fleet: {cl: 1, dd: 2, any: 3}
 
 end
