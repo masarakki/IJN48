@@ -11,7 +11,7 @@ describe Naka::Api::Status do
 
     its(:fuel) { should == 11894 }
     its(:bullet) { should == 21688 }
-    its(:iron) { should == 14642 }
+    its(:steel) { should == 14642 }
     its(:bauxite) { should == 25102 }
   end
 end

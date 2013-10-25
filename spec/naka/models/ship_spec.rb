@@ -51,6 +51,8 @@ describe Naka::Models::Ship do
     describe :danger? do
       it { expect(Naka::Models::Ship::Hp.new(11, 21)).not_to be_danger }
       it { expect(Naka::Models::Ship::Hp.new(10, 20)).to be_danger }
+      it { expect(Naka::Models::Ship::Hp.new(8, 30)).not_to be_fatal }
+      it { expect(Naka::Models::Ship::Hp.new(7, 30)).to be_fatal }
     end
   end
 

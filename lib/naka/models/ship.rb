@@ -5,6 +5,7 @@ module Naka
       Hp = Struct.new(:now, :max) do
         def damaged? ; now != max ; end
         def danger? ; now * 2 <= max ; end
+        def fatal? ; now * 4 <= max ; end
       end
 
       attr_accessor :id, :ship_id, :lv, :fuel, :bull, :hp, :repairs_in, :condition, :master

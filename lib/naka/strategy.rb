@@ -38,8 +38,8 @@ module Naka
         end
 
         def run
-          accept_ids = accept
-          yield(accept_ids)
+          @accept_ids = accept
+          yield(@accept_ids)
           finish
           restore
         end
