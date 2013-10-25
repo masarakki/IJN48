@@ -53,8 +53,8 @@ module Naka
         fleets.select(&:missionable?).zip(candidates).each do |fleet, mission|
           begin
             p "mission_result: fleet=#{fleet.id}, mission=#{fleet.mission.id}, result=#{user.mission_result(fleet.id)}" if fleet.mission
-            ship_ids = Naka::Strategies::Organize.new(user, fleet.id, damaged: true).start
-            Naka::Strategies::Supply.new(user, ship_ids.compact).start
+            ships = Naka::Strategies::MissionOrganize.new(user, fleet.id, mission).start
+            Naka::Strategies::Supply.new(user, ships.map(&:id).compact).start
             user.start_mission(fleet.id, mission.id) if fleet && mission.id
           end
         end
