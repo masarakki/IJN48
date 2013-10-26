@@ -39,7 +39,7 @@ module Naka
         return @usable_ships if @usable_ships
         reject_ship_ids = repairing_ship_ids + other_fleet_ship_ids
         @usable_ships = user_ships.reject do |ship|
-          reject_ship_ids.include?(ship.id) || ship.tired?
+          reject_ship_ids.include?(ship.id) || ship.tired? || !ship.locked?
         end
       end
 
@@ -78,6 +78,7 @@ module Naka
           types = type_mappings[type]
           types.map {|type_str| ship_stats[type_str][:high] }.sum >= num
         end
+
         candidates = []
         mission.fleet.each_pair.map do |type, num|
           types = type_mappings[type]
@@ -86,7 +87,12 @@ module Naka
             !candidates.include?(ship) &&
             (use_high ? ship.high? : true) &&
             (ship_stats[ship.master.type][:use_danger] ? !ship.hp.fatal? : !ship.hp.danger?)
-          }.sort_by{ |ship| [ship.hp.danger? ? 0 : 1, ship.master.fuel, ship.master.bullet]}.take(num)
+          }.sort_by{ |ship| [
+              ship.hp.danger? ? 0 : 1,
+              ship.high? ? 1 : 0,
+              ship.master.fuel,
+              ship.master.bullet
+            ]}.take(num)
           raise unless candidates_for_type.size == num
           candidates += candidates_for_type
         end
