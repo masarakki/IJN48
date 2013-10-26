@@ -1,4 +1,3 @@
-require 'active_support'
 require 'active_support/core_ext'
 require 'naka/server'
 require 'naka/user'
