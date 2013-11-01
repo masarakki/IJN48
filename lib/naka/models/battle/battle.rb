@@ -6,6 +6,15 @@ module Naka
 
         def completed? ; @completed ; end
 
+        def fdam_and_edam(stage, now_hps)
+          [:api_fdam, :api_edam].each_with_index do |key, fleet_index|
+            stage[key].each_with_index do |dam, index|
+              now_hps[6 * fleet_index + index] -= dam  if dam > 0
+            end
+          end
+          now_hps
+        end
+
         def self.from_api(response)
           battle = new
           data = response[:api_data]
@@ -16,15 +25,18 @@ module Naka
           fleet_max_hps = max_hps[1, 6].reject{|x| x == -1}
           enemy_max_hps = max_hps[7, 6].reject{|x| x == -1}
 
-          [data[:api_kouku][:api_stage3], data[:api_opening_atack], data[:api_raigeki]].each do |stage|
-            if stage
-              [:api_fdam, :api_edam].each_with_index do |key, fleet_index|
-                stage[key].each_with_index do |dam, index|
-                  now_hps[6 * fleet_index + index] -= dam  if dam > 0
-                end
-              end
+          if data[:api_kouku]
+            if key = data[:api_kouku][:api_stage3]
+              now_hps = battle.fdam_and_edam(key, now_hps)
             end
           end
+          if key = data[:api_opening_atack]
+            now_hps = battle.fdam_and_edam(key, now_hps)
+          end
+          if key = data[:api_raigeki]
+            now_hps = battle.fdam_and_edam(key, now_hps)
+          end
+
           if data[:api_hougeki]
             data[:api_hougeki][:api_df_list].zip(data[:api_hougeki][:api_damage]).each do |fire|
               unless fire.first == -1
