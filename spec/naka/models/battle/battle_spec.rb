@@ -66,4 +66,10 @@ describe Naka::Models::Battle::Battle do
     its(:enemy_hps) { should == [[0, 75]] }
     it { should be_completed }
   end
+
+  describe 'night_to_day' do
+    before { mock_battle('night_to_day') }
+    its(:enemy_hps) { should == [[0, 180], [0, 55], [0, 45], [0, 28], [0, 24], [0, 24]]  }
+    its(:fleet_hps) { should == [[74, 75], [30, 30], [43, 43], [39, 43], [10, 31], [53, 65]] }
+  end
 end

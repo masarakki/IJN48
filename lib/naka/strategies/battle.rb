@@ -35,8 +35,11 @@ module Naka
         loop do
           if move.battle?
             p [:boss?, move.boss?]
-            if move.midnight?
+            case
+            when move.midnight?
               battle = @user.api.battle.midnight_battle(@options[:formation] || 1)
+            when move.night_to_day?
+              battle = @user.api.battle.night_to_day(@options[:formation] || 1)
             else
               battle = @user.api.battle.battle(@options[:formation] || 1)
             end
