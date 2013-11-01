@@ -28,6 +28,11 @@ module Naka
         response = request '/kcsapi/api_req_battle_midnight/sp_midnight', api_formation: formation
         Naka::Models::Battle::MidnightBattle.from_api(response)
       end
+
+      def night_to_day(formation = 1)
+        response = request '/kcsapi/api_req_sortie/night_to_day', api_formation: formation
+        Naka::Models::Battle::Battle.from_api(response)
+      end
     end
 
     Manager.register :battle, Battle
