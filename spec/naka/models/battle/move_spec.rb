@@ -78,5 +78,14 @@ describe Naka::Models::Battle::Move do
       it { should_not be_skippable }
       it { should be_night_to_day }
     end
+
+    context 'night_to_day_not_boss' do
+      before { stub_request(:any, //).to_return(body: mock_file('api/battle/next/night_to_day_not_boss.json')) }
+      it { should be_a described_class }
+      it { should be_terminal }
+      it { should_not be_boss }
+      it { should_not be_skippable }
+      it { should be_night_to_day }
+    end
   end
 end
