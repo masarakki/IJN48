@@ -7,7 +7,17 @@ module Naka
 
       def mission_result(deck_id)
         response = api.post '/kcsapi/api_req_mission/result', api_deck_id: deck_id
-        response[:api_data][:api_clear_result] == 1
+        case response[:api_data][:api_clear_result]
+        when 0
+          :failure
+        when 1
+          :success
+        when 2
+          :awesome
+        else
+          p response[:api_data][:api_clear_result]
+          :failure
+        end
       end
     end
   end
