@@ -53,10 +53,16 @@ describe Naka::Strategies::Base::QuestRunner do
       mock_user.stub(:stop_quest => true, :start_quest => true)
       expect(runner.send(:accept)).to eq [1, 2, 3, 4]
     end
+    it '@quest_changed should be true' do
+      mock_user.stub(:stop_quest => true, :start_quest => true)
+      runner.send(:accept)
+      expect(runner.instance_variable_get(:@quest_changed)).to be_true
+    end
   end
   describe :restore do
     it 'chancel and start quests' do
       runner.instance_variable_set(:@before_ids, [1, 2, 3, 11])
+      runner.instance_variable_set(:@quest_changed, true)
       [6].each {|id| mock_user.should_receive(:stop_quest).with(id) }
       [1, 3].each {|id| mock_user.should_receive(:start_quest).with(id) }
       runner.send(:restore)
