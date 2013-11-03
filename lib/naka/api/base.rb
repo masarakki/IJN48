@@ -5,6 +5,8 @@ module Naka
     class Base
       extend Forwardable
 
+      attr_reader :user, :client
+
       def initialize(user)
         @user = user
         @client = Client.new(user)
