@@ -37,7 +37,9 @@ module Naka
       def high? ; @condition >= 50 ; end
       def good? ; @condition >= 40 ; end
       def tired? ; @condition < 30 ; end
-      def danger? ; tired? || hp.danger? ; end
+      def danger?
+        hp.fatal? || tired? || !high? && hp.danger?
+      end
       def consumed? ; ! (master.bullet == bullet && master.fuel == fuel) ; end
 
       def nowhp=(val) ; @hp.now = val ; end

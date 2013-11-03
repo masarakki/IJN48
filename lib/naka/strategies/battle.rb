@@ -54,7 +54,10 @@ module Naka
             result = @user.api.battle.result
             p [:fleet, battle.fleet_hps]
             p [:enemy, battle.enemy_hps]
-            return finish("損傷撤退" ) if battle.fleet_hps.any? {|x| (x.first.to_f / x.last) <= 0.5 }
+            fleet = user.fleets.first
+            update_ships = user.ships
+            ships = ships.map { |ship| update_ships.detect{|x| x.id == ship.id} }
+            return finish("損傷撤退" ) if ships.any?(&:danger?)
           else
             p :skip
           end

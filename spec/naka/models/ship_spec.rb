@@ -57,8 +57,8 @@ describe Naka::Models::Ship do
   end
 
   describe :factories do
-    describe :damaged do
-      subject { build(:ship, :damaged) }
+    describe :small_damaged do
+      subject { build(:ship, :small_damaged) }
       it { should be_damaged }
       it { should_not be_danger }
     end
@@ -70,6 +70,10 @@ describe Naka::Models::Ship do
     describe :damaged_and_tired do
       subject { build(:ship, :damaged, :tired) }
       it { should be_danger }
+    end
+    describe :high_and_danger do
+      subject { build(:ship, :damaged, :high) }
+      it { should_not be_danger }
     end
   end
 end
