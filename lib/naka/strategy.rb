@@ -3,10 +3,6 @@ module Naka
     class Base
       attr_reader :user
 
-      def self.name(name)
-        define_method(:name) { name }
-      end
-
       def self.quest_ids(*ids)
         define_method(:quest_ids) { ids }
       end
