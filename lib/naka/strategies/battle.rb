@@ -26,12 +26,17 @@ module Naka
         @options = options
       end
 
+      def finish(string)
+        @user.api.battle.finish
+        string
+      end
+
       def run(mission_ids)
-        Naka::Strategies::Organize.new(@user, 1).start
+        ships = Naka::Strategies::Organize.new(@user, 1).start
+        Naka::Strategies::Supply.new(@user, ships.map(&:id)).start
+        p ships.map{|x| x.master.name }
         move = @user.api.battle.start(@map.map_id, @map.area_id)
-        Naka::Strategies::Supply.new(@user, @user.fleets.first.ship_ids.compact).start
-        user_ships = @user.ships
-        p @user.fleets.first.ship_ids.compact.map{|x| user_ships.detect{|ship| ship.id == x}.master.name }
+
         loop do
           if move.battle?
             p [:boss?, move.boss?]
@@ -42,14 +47,19 @@ module Naka
               battle = @user.api.battle.night_to_day(@options[:formation] || 1)
             else
               battle = @user.api.battle.battle(@options[:formation] || 1)
+              if battle.enemy_hps.first.last > 150 && battle.enemy_hps.first.first > 0
+                battle = @user.api.battle.midnight
+              end
             end
             result = @user.api.battle.result
-            return "損傷撤退" if battle.fleet_hps.any? {|x| (x.first.to_f / x.last) <= 0.5 }
+            p [:fleet, battle.fleet_hps]
+            p [:enemy, battle.enemy_hps]
+            return finish("損傷撤退" ) if battle.fleet_hps.any? {|x| (x.first.to_f / x.last) <= 0.5 }
           else
             p :skip
           end
-          return "予定撤退" if @options[:one]
-          return "完了" if move.terminal?
+          return finish("予定撤退") if @options[:one]
+          return finish("完了") if move.terminal?
           move = @user.api.battle.next unless move.terminal?
         end
       end

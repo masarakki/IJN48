@@ -57,7 +57,8 @@ module Naka
 
       def change_normal
         fleet_ship_names = fleet_ships.map(&:pure_name)
-        fleet_ships.each_with_index do |ship, index|
+
+        fleet_ships.each_with_index.map do |ship, index|
           if ship && ship.danger?
             other_names = fleet_ship_names - [ship.pure_name]
             type = ship.master.type
@@ -69,9 +70,11 @@ module Naka
             raise unless candidate
             user.api.deck.change(@fleet_id, index, candidate.id)
             fleet_ship_names = other_names + [candidate.pure_name]
+            candidate
+          else
+            ship
           end
         end
-        fleet_ship_names
       end
     end
   end
