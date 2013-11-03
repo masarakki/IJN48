@@ -11,18 +11,27 @@ FactoryGirl.define do
 
     locked false
 
-    trait :damaged do
+    trait :small_damaged do
       hp { Naka::Models::Ship::Hp.new(20, 30) }
+      repairs_in 60 * 3
+    end
+
+    trait :damaged do
+      hp { Naka::Models::Ship::Hp.new(15, 30) }
       repairs_in 60 * 10
     end
 
     trait :fatal_damaged do
-      hp { Naka::Models::Ship::Hp.new(15, 30) }
+      hp { Naka::Models::Ship::Hp.new(8, 32) }
       repairs_in 60 * 60 * 12
     end
 
     trait :tired do
       condition 29
+    end
+
+    trait :high do
+      condition 70
     end
   end
 
