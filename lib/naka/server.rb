@@ -148,6 +148,10 @@ module Naka
       Naka::Strategies::Battle.new(user, 3, 2, {:one => true}).start
     end
 
+    get '/kira' do
+      Naka::Strategies::Kira.new(user, params[:type]).start.to_json
+    end
+
     def user
       User.first
     end

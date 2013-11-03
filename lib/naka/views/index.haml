@@ -47,6 +47,12 @@
   %h3 操作
   %ul
     %li
+      キラ化
+      %ul
+        - %w{ 潜水艦 駆逐艦 軽巡洋艦 正規空母 戦艦 }.each do |type|
+          %li
+            %a(href="/kira?type=#{type}")= type
+    %li
       修理
       %ul
         %li

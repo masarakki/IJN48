@@ -1,7 +1,13 @@
 # -*- coding: utf-8 -*-
+require 'forwardable'
+
 module Naka
   module Models
     class Ship
+      extend Forwardable
+
+      def_delegators :master, :name, :type
+
       Hp = Struct.new(:now, :max) do
         def damaged? ; now != max ; end
         def danger? ; now * 2 <= max ; end
