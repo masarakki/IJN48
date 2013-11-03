@@ -40,31 +40,39 @@ module Naka
           restore
         end
 
+
         private
         def accept
-          start_ids = (@request_ids - @before_ids) & @current_quests.map(&:id)
-          stop_count = (start_ids + @before_ids).count - 5
-          stop_ids = (@before_ids - @request_ids)[0,stop_count] || []
-          stop_ids.each {|id| @user.stop_quest(id) }
-          start_ids.each {|id| @user.start_quest(id) }
-          @request_ids & @current_quests.map(&:id)
+          if @request_ids
+            start_ids = (@request_ids - @before_ids) & @current_quests.map(&:id)
+            stop_count = (start_ids + @before_ids).count - 5
+            stop_ids = (@before_ids - @request_ids)[0,stop_count] || []
+            stop_ids.each {|id| @user.stop_quest(id) }
+            start_ids.each {|id| @user.start_quest(id) }
+            @quest_changed = stop_ids.count > 0
+            @request_ids & @current_quests.map(&:id)
+          end
         end
 
         def finish
-          @user.quests.select(&:completable?).each do |quest|
-            @user.complete_quest(quest.id)
-            p "Complete quest #{quest.id}: #{quest.name}"
+          if @request_ids
+            @user.quests.select(&:completable?).each do |quest|
+              @user.complete_quest(quest.id)
+              p "Complete quest #{quest.id}: #{quest.name}"
+            end
           end
         end
 
         def restore
-          quests = @user.quests
-          accept_ids = quests.select(&:accept?).map(&:id)
-          start_ids = @before_ids & quests.map(&:id) - accept_ids
-          stop_count = (start_ids + accept_ids).count - 5
-          stop_ids = (accept_ids - @before_ids)[0, stop_count] || []
-          stop_ids.each{|id| @user.stop_quest(id) }
-          start_ids.each{|id| @user.start_quest(id) }
+          if @request_ids && @quest_changed
+            quests = @user.quests
+            accept_ids = quests.select(&:accept?).map(&:id)
+            start_ids = @before_ids & quests.map(&:id) - accept_ids
+            stop_count = (start_ids + accept_ids).count - 5
+            stop_ids = (accept_ids - @before_ids)[0, stop_count] || []
+            stop_ids.each{|id| @user.stop_quest(id) }
+            start_ids.each{|id| @user.start_quest(id) }
+          end
         end
       end
     end
