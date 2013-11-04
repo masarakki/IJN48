@@ -20,40 +20,44 @@ module Naka
     class Battle < Base
       quest_ids 201, 210, 211, 213, 214, 216, 218, 220, 221, 226, 228, 229, 230
 
+      attr_reader :map
+
       def initialize(user, map_id, area_id, options = {})
         @user = user
-        @map = @user.api.master.map(map_id, area_id)
+        @map = user.api.master.map(map_id, area_id)
         @options = options
       end
 
       def finish(string)
-        @user.api.battle.finish
+        user.api.battle.finish
         string
       end
 
       def run(mission_ids)
-        ships = Naka::Strategies::Organize.new(@user, 1).start
-        Naka::Strategies::Supply.new(@user, ships.map(&:id)).start
+        ships = Naka::Strategies::Organize.new(user, 1).start
+        Naka::Strategies::Supply.new(user, ships.map(&:id)).start
         p ships.map{|x| x.master.name }
-        move = @user.api.battle.start(@map.map_id, @map.area_id)
+        move = user.api.battle.start(map.map_id, map.area_id)
 
         loop do
           if move.battle?
             p [:boss?, move.boss?]
             case
             when move.midnight?
-              battle = @user.api.battle.midnight_battle(@options[:formation] || 1)
+              battle = user.api.battle.midnight_battle(@options[:formation] || 1)
             when move.night_to_day?
-              battle = @user.api.battle.night_to_day(@options[:formation] || 1)
+              battle = user.api.battle.night_to_day(@options[:formation] || 1)
             else
-              battle = @user.api.battle.battle(@options[:formation] || 1)
+              battle = user.api.battle.battle(@options[:formation] || 1)
               if battle.enemy_hps.first.last > 150 && battle.enemy_hps.first.first > 0
-                battle = @user.api.battle.midnight
+                battle = user.api.battle.midnight
               end
             end
-            result = @user.api.battle.result
+            result = user.api.battle.result
             p [:fleet, battle.fleet_hps]
             p [:enemy, battle.enemy_hps]
+            return finish("予定撤退") if @options[:one]
+
             fleet = user.fleets.first
             update_ships = user.ships
             ships = ships.map { |ship| update_ships.detect{|x| x.id == ship.id} }
@@ -61,9 +65,8 @@ module Naka
           else
             p :skip
           end
-          return finish("予定撤退") if @options[:one]
           return finish("完了") if move.terminal?
-          move = @user.api.battle.next unless move.terminal?
+          move = user.api.battle.next unless move.terminal?
         end
       end
     end

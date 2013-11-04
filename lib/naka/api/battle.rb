@@ -18,9 +18,6 @@ module Naka
 
       def result
         request '/kcsapi/api_req_sortie/battleresult'
-        request '/kcsapi/api_get_member/ship2', api_sort_order: 2, api_sort_key: 1
-        request '/kcsapi/api_get_member/slotitem'
-        request '/kcsapi/api_get_member/deck'
       end
 
       def next
@@ -40,11 +37,6 @@ module Naka
 
       def finish
         request '/kcsapi/api_auth_member/logincheck'
-        request '/kcsapi/api_get_member/material'
-        request '/kcsapi/api_get_member/deck_port'
-        request '/kcsapi/api_get_member/ndock'
-        request '/kcsapi/api_get_member/ship2', api_sort_order: 2, api_sort_key: 1
-        request '/kcsapi/api_get_member/basic'
       end
     end
 
