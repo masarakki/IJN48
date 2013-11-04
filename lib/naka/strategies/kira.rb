@@ -15,7 +15,7 @@ module Naka
       def initialize(user, target = '駆逐艦')
         @user = user
         @map = @user.api.master.map(1, 1)
-        @ship = user.ships.detect{|ship| ship.type == target && !ship.high? && !ship.hp.fatal?}
+        @ship = user.ships.detect {|ship| ship.type == target && !ship.high? && !ship.bad? && !ship.hp.fatal? && ship.locked? }
       end
 
       def finish(string)
@@ -52,7 +52,7 @@ module Naka
             battle
             condition = update_ship.condition
             return result(:failure, times) if ship.hp.fatal?
-            return result(:failure, times) if condition < before_condition
+            return result(:failure, times) unless condition > before_condition
             return result(:success, times) if condition > 70
             times += 1
           end
