@@ -1,3 +1,4 @@
+# -*- coding: utf-8 -*-
 module Naka
   module Strategies
     class Repair < Base
@@ -33,6 +34,7 @@ module Naka
         }.sort_by { |ship|
           [
             fleets_ship_ids.include?(ship.id) ? 1 : 0,
+            ship.type == "潜水艦" ? 0 : 1,
             has_short? ? - ship.repairs_in : ship.repairs_in
           ]
         }
