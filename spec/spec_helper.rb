@@ -33,6 +33,8 @@ RSpec.configure do |config|
   config.before do
     stub_request(:post, "http://#{mock_user.api_host}/kcsapi/api_get_master/ship").
       to_return(status: 200, body: mock_file('api/ships/master.json'))
+    stub_request(:post, "http://#{mock_user.api_host}/kcsapi/api_get_member/ship2").
+      to_return(status: 200, body: mock_file('api/ships/response.json'))
     stub_request(:post, "http://#{mock_user.api_host}/kcsapi/api_get_master/stype").
       to_return(status: 200, body: mock_file('api/master/ship_type.json'))
   end
