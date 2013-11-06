@@ -3,15 +3,14 @@ require 'spec_helper'
 describe Naka::Api::Status do
   let(:api) { mock_user.api.status }
   describe :materials do
-    before do
-      stub_request(:post, "http://#{mock_user.api_host}/kcsapi/api_get_member/material").to_return(
-        :status => 200, :body => mock_file('api/materials/response.json'))
-    end
     subject { api.materials }
 
-    its(:fuel) { should == 11894 }
-    its(:bullet) { should == 21688 }
-    its(:steel) { should == 14642 }
-    its(:bauxite) { should == 25102 }
+    its(:fuel) { should == 1706 }
+    its(:bullet) { should == 64433 }
+    its(:steel) { should == 12948 }
+    its(:bauxite) { should == 36164 }
+    its(:repair) { should == 503 }
+    its(:ship) { should == 264 }
+    its(:creator) { should == 945 }
   end
 end
