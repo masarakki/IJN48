@@ -28,6 +28,10 @@ module Naka
         @mission = Mission.new(val[1], Time.at(val[2] / 1000)) unless val == [0, 0, 0, 0]
       end
 
+      def mission?
+        mission.present?
+      end
+
       def missionable?
         id != 1 && (mission.nil? || mission.finished?)
       end
