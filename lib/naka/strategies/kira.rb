@@ -10,17 +10,26 @@ module Naka
   module Strategies
     class Kira < Base
       quest_ids 201, 210, 214, 216
-      attr_accessor :map, :ship
+      attr_accessor :map, :ship, :target
 
       def initialize(user, target = '駆逐艦')
         @user = user
         @map = @user.api.master.map(1, 1)
-        @ship = user.ships.detect {|ship| ship.type == target && !ship.high? && !ship.bad? && !ship.hp.fatal? && ship.locked? }
+        @target = target
+        @ship = candidate_ships.sample
       end
 
       def finish(string)
         user.api.battle.finish
         string
+      end
+
+      def candidate_ships
+        ships_under_mission = user.fleets.select{|fleet| fleet.mission? }.map(&:ship_ids)
+        ships_in_dock = user.docks.map(&:ship_id)
+        exclude_ship_ids = (ships_under_mission + ships_in_dock).flatten.compact.uniq
+
+        user.ships.select {|ship| ship.type == target && !ship.high? && !ship.bad? && !ship.hp.fatal? && ship.locked? && !exclude_ship_ids.include?(ship.id) }
       end
 
       def battle
