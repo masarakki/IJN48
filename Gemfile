@@ -22,6 +22,7 @@ group :development, :test do
   gem 'guard'
   gem 'guard-rspec'
   gem 'factory_girl'
+  gem 'simplecov'
 end
 
 group :test do

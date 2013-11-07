@@ -5,12 +5,18 @@
 #
 # See http://rubydoc.info/gems/rspec-core/RSpec/Core/Configuration
 $:.unshift File.expand_path('../../lib', __FILE__)
-require 'naka'
+
+require 'simplecov'
 require 'webmock/rspec'
 require 'factory_girl'
 require 'pry'
 
 RSpec.configure do |config|
+  SimpleCov.start do
+    add_filter 'spec'
+  end
+  require 'naka'
+
   config.treat_symbols_as_metadata_keys_with_true_values = true
   config.run_all_when_everything_filtered = true
   config.filter_run :focus
