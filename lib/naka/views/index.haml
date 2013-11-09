@@ -27,15 +27,29 @@
       %ul
         %li
           %a(href="/battle/3-2-1") 3-2-1
+    - if @areas.any?(&:event_area?)
+      %li
+        イベント
+        %ul
+          - @areas.select(&:event_area?).each do |area|
+            %li
+              = area.name
+              %ul
+                - @mapinfos[area.id].each do |mapinfo|
+                  %li
+                    %a(href="/battle/#{area.id}-#{mapinfo.map_id}")
+                      = mapinfo.name
+
     %li
       通常
       %ul
-        - [4, 4, 4, 4, 3].each_with_index do |areas, map|
+        - @areas.reject(&:event_area?).each do |area|
           %li
-            = "#{map+1} - "
-            - areas.times do |area|
-              %a.btn(href="/battle/#{map+1}-#{area+1}")
-                = area + 1
+            = "#{area.id} - "
+            - @mapinfos[area.id].each do |mapinfo|
+              %a.btn(href="/battle/#{area.id}-#{mapinfo.map_id}")
+                = mapinfo.map_id
+
     %li
       その他
       %ul

@@ -11,9 +11,15 @@ module Naka
           "Naka::Models::Master::#{class_name}".constantize
         end
 
-        def self.cache(val)
+        def self.cache(val, expires_in = nil)
           define_method(:keyname) do |*args|
             ([Naka.redis_prefix, "master:#{val}"] + args).join(":")
+          end
+          if expires_in
+            define_method(:expirable?) { true }
+            define_method(:expires_in) { expires_in }
+          else
+            define_method(:expirable?) { false }
           end
           private :keyname
         end
@@ -51,6 +57,7 @@ module Naka
           else
             items = fetch_all(*args)
             Naka.redis.set cache_keyname, MultiJson.encode(items)
+            Naka.redis.expire cache_keyname, expires_in if expirable?
           end
           self.class.parser.from_api(items)
         end

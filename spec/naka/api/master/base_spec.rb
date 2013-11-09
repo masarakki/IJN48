@@ -12,11 +12,27 @@ describe Naka::Api::Master::Base do
   subject { instance }
   describe :keyname do
     it { expect(subject.send(:keyname)).to eq 'ijn48:test:master:tests' }
+    it { expect(subject).not_to be_expirable }
   end
   describe :fetch_all do
     it 'should call api' do
       instance.should_receive(:request).with "/kcsapi/api_get_master/test"
       instance.send(:fetch_all)
+    end
+  end
+
+  context :expirable do
+    let(:target_class) do
+      Class.new(Naka::Api::Master::Base) do
+        cache 'tests', 900
+        endpoint 'test'
+      end
+    end
+    describe :expire do
+      it { expect(subject).to be_expirable }
+      describe :expires_in do
+        it { expect(subject.expires_in).to eq 900 }
+      end
     end
   end
 
