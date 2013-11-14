@@ -49,9 +49,9 @@
     %li
       キラ化
       %ul
-        - %w{ 潜水艦 駆逐艦 軽巡洋艦 正規空母 戦艦 }.each do |type|
+        - {ss: '潜水艦', dd: '駆逐', cl: '軽巡', tc: '雷巡', ca: '重巡', lcv: '軽空母', cv: '正規空母', bb: '戦艦' }.each_pair do |type, name|
           %li
-            %a(href="/kira?type=#{type}")= type
+            %a(href="/kira?type=#{type}")= name
     %li
       修理
       %ul
