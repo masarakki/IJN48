@@ -25,7 +25,7 @@ module Naka
       end
 
       def target_ship_types(type)
-        ids = case type
+        ids = case type.to_sym
               when :ss
                 [13, 14]
               when :dd
