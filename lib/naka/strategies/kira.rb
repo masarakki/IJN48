@@ -50,7 +50,7 @@ module Naka
         ships_under_mission = user.fleets.select{|fleet| fleet.mission? }.map(&:ship_ids)
         ships_in_dock = user.docks.map(&:ship_id)
         exclude_ship_ids = (ships_under_mission + ships_in_dock).flatten.compact.uniq
-        user.ships.select {|ship| targets.include?(ship.type) && !ship.high? && !ship.bad? && !ship.hp.fatal? && ship.locked? && !exclude_ship_ids.include?(ship.id) }
+        user.ships.select {|ship| targets.include?(ship.type) && !ship.high? && !ship.bad? && !ship.hp.danger? && ship.locked? && !exclude_ship_ids.include?(ship.id) }
       end
 
       def battle
