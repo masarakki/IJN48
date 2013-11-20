@@ -37,7 +37,7 @@
               %ul
                 - @mapinfos[area.id].each do |mapinfo|
                   %li
-                    %a(href="/battle/#{area.id}-#{mapinfo.map_id}")
+                    %a(href="/battle?area=#{area.id}&map=#{mapinfo.map_id}")
                       = mapinfo.name
 
     %li
@@ -47,7 +47,7 @@
           %li
             = "#{area.id} - "
             - @mapinfos[area.id].each do |mapinfo|
-              %a.btn(href="/battle/#{area.id}-#{mapinfo.map_id}")
+              %a.btn(href="/battle?area=#{area.id}&map=#{mapinfo.map_id}")
                 = mapinfo.map_id
 
     %li
