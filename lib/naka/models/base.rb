@@ -9,7 +9,7 @@ module Naka
 
       def self.register(item)
         item = self.new(item) unless item.is_a? self
-        collection << item
+        collection << item unless find(item.id)
       end
 
       class << self

@@ -8,6 +8,8 @@ module Naka
     register Sinatra::Namespace
 
     get '/' do
+      @areas = user.api.master.area
+      @mapinfos = user.api.master.mapinfo.select(&:enabled?).group_by(&:area_id)
       haml :index
     end
 
