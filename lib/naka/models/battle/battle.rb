@@ -47,8 +47,13 @@ module Naka
 
           [:api_hougeki1, :api_hougeki2].each do |key|
             if data[key]
-              data[key][:api_df_list].zip(data[key][:api_damage]).each do |fire|
-                now_hps[fire.first] -= fire.last unless fire.first == -1
+              data[key][:api_df_list].zip(data[key][:api_damage]).each do |fires|
+                p fires
+                unless fires.first == -1
+                  fires.first.zip(fires.last).each do |fire|
+                    now_hps[fire.first] -= fire.last
+                  end
+                end
               end
             end
           end
