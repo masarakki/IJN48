@@ -14,7 +14,11 @@ module Naka
         battle = user.api.practice.battle(@practice)
         p [:our, battle.fleet_hps]
         p [:enemy, battle.enemy_hps]
-        user.api.practice.midnight(@practice) unless battle.completed?
+        unless battle.completed?
+          sleep 10
+          user.api.practice.midnight(@practice)
+        end
+        sleep 10
         user.api.practice.result
       end
     end

@@ -19,7 +19,6 @@ module Naka
   module Strategies
     class Battle < Base
       quest_ids 201, 210, 211, 213, 214, 216, 218, 220, 221, 226, 228, 229, 230
-
       attr_reader :map
 
       def initialize(user, map_id, area_id, options = {})
@@ -50,9 +49,12 @@ module Naka
             else
               battle = user.api.battle.battle(@options[:formation] || 1)
               if battle.enemy_hps.first.last > 150 && battle.enemy_hps.first.first > 0
+                sleep 10
+                p :midnight
                 battle = user.api.battle.midnight
               end
             end
+            sleep 10
             result = user.api.battle.result
             p [:fleet, battle.fleet_hps]
             p [:enemy, battle.enemy_hps]
@@ -67,6 +69,7 @@ module Naka
           end
           return finish("完了") if move.terminal?
           move = user.api.battle.next unless move.terminal?
+          sleep 5
         end
       end
     end
