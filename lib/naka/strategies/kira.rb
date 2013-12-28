@@ -15,6 +15,7 @@ module Naka
       def initialize(user, type = :dd)
         @user = user
         @map = @user.api.master.map(1, 1)
+        @before_fleet_ship_ids = user.fleets.first.ship_ids
         @targets = target_ship_types(type)
         @ship = candidate_ships.sample
       end
@@ -92,6 +93,7 @@ module Naka
       end
 
       def result(code, times)
+        user.api.deck.organize(1, @before_fleet_ship_ids.compact)
         {
           status: code,
           ship: {
