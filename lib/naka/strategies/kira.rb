@@ -59,11 +59,13 @@ module Naka
         loop do
           if move.battle?
             battle = user.api.battle.battle
+            sleep 10
             result = user.api.battle.result
             return finish("損傷撤退" ) if battle.fleet_hps.any? {|x| (x.first.to_f / x.last) <= 0.5 }
           end
           return finish("完了") if move.terminal?
           move = user.api.battle.next unless move.terminal?
+          sleep 5
         end
       end
 
