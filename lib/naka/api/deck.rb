@@ -16,7 +16,11 @@ module Naka
         fleet = user.fleets[fleet_id - 1]
         (fleet.ship_ids.size - ships.size).times { remove(fleet_id, ships.size) }
         ships.each_with_index do |ship, index|
-          change(fleet_id, index, ship.id)
+          if ship.is_a? Integer
+            change(fleet_id, index, ship)
+          else
+            change(fleet_id, index, ship.id)
+          end
         end
         ships
       end
