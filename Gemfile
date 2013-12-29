@@ -13,6 +13,7 @@ gem 'rest-client'
 gem 'multi_json'
 gem 'yajl-ruby'
 gem 'activesupport'
+gem 'resque'
 
 group :development, :test do
   gem 'rspec'

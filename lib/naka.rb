@@ -4,6 +4,7 @@ require 'naka/user'
 require 'naka/models'
 require 'naka/api'
 require 'naka/strategy'
+require 'naka/command'
 require 'redis'
 
 module Naka
