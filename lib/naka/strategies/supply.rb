@@ -18,7 +18,7 @@ module Naka
             end
           end
         else
-          user.supply(ships.map(&:id)) if ships.count > 0
+          user.supply(ships.map(&:id)) if ships.count > 0 && ships.any?(&:consumed?)
         end
       end
     end
