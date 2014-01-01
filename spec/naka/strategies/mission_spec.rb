@@ -18,14 +18,29 @@ describe Naka::Strategies::Mission do
       it { expect(subject).to eq [3, 5, 9] }
     end
 
+    context 'less fuel than others' do
+      let(:materials) { Naka::Models::Materials.new(10000, 20000, 20000, 20000, 100, 1000, 100) }
+      it { expect(subject).to eq [2, 3, 5] }
+    end
+
     context 'few fuel and bullet' do
       let(:materials) { Naka::Models::Materials.new(100, 100, 20000, 20000, 100, 100, 100) }
       it { expect(subject).to eq [2, 3, 5] }
     end
 
+    context 'few repair' do
+      let(:materials) { Naka::Models::Materials.new(20000, 20000, 20000, 20000, 100, 10, 100) }
+      it { expect(subject).to eq [2, 3, 5] }
+    end
+
+    context 'much bullet' do
+      let(:materials) { Naka::Models::Materials.new(5000, 20000, 5000, 5000, 100, 100, 100) }
+      it { expect(subject).to eq [3, 5, 6] }
+    end
+
     context 'else' do
       let(:materials) { Naka::Models::Materials.new(25000, 25000, 25000, 25000, 500, 500, 500) }
-      it { expect(subject).to eq [2, 4, 10] }
+      it { expect(subject).to eq [2, 3, 5] }
     end
   end
 end

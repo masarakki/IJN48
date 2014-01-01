@@ -34,7 +34,7 @@ module Naka
           sum =  materials.select{|x| x.material?}.sum(&:counter)
           ratio = material_keys.inject({}) do |res, key|
             res[key] = (materials.send(key).counter + 1.0) / sum
-            res[key] /= 10 if key == :repair
+            res[key] *= 100 if key == :repair
             res
           end
           @missions = candidates.sort_by { |mission|
