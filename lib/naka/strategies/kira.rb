@@ -38,7 +38,7 @@ module Naka
               when :ca
                 [5, 6]
               when :cv
-                [6, 7, 10, 11]
+                [6, 7, 10, 11, 18]
               when :lcv
                 [6, 7, 16]
               when :bb
